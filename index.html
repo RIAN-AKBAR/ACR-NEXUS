@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>ACR NEXUS | Gamepass & Cash Store — Modern Digital Shop</title>
+  <title>ACR NEXUS | Gamepass & Cash Store — Modern Aesthetic</title>
   <!-- Google Fonts & Font Awesome -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -16,46 +16,73 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at 10% 20%, #0b0e18, #07090f);
       color: #edf2ff;
       scroll-behavior: smooth;
       padding: 1.8rem;
+      position: relative;
+      min-height: 100vh;
+      background: #0a0c1a;
     }
 
-    ::-webkit-scrollbar {
-      width: 6px;
+    /* ========== EFEK BINTIK BERJALAN (ANIMATED DOTS / SCINTILLATING) ========== */
+    .moving-dots {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at 30% 40%, #0f1230, #020617);
+      overflow: hidden;
     }
-    ::-webkit-scrollbar-track {
-      background: #141a2c;
-      border-radius: 10px;
+
+    /* Canvas untuk partikel bintik bergerak */
+    #dotCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
     }
-    ::-webkit-scrollbar-thumb {
-      background: #3e4eff;
-      border-radius: 10px;
+
+    /* Soft overlay gradien agar teks tetap terbaca */
+    .gradient-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at 50% 40%, rgba(10, 20, 50, 0.4), rgba(2, 6, 23, 0.7));
+      z-index: -1;
+      pointer-events: none;
     }
 
     .container {
       max-width: 1440px;
       margin: 0 auto;
+      position: relative;
+      z-index: 2;
     }
 
-    /* header premium */
+    /* header premium glassmorphism */
     .brand {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       margin-bottom: 2rem;
-      background: rgba(12, 16, 28, 0.5);
-      backdrop-filter: blur(12px);
+      background: rgba(12, 16, 28, 0.45);
+      backdrop-filter: blur(14px);
       padding: 1rem 2rem;
       border-radius: 3rem;
-      border: 1px solid rgba(62, 78, 255, 0.3);
+      border: 1px solid rgba(90, 110, 255, 0.4);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
     .logo h1 {
       font-size: 2.1rem;
       font-weight: 800;
-      background: linear-gradient(130deg, #FFFFFF, #8f9eff);
+      background: linear-gradient(130deg, #FFFFFF, #8f9eff, #b7c4ff);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -63,23 +90,20 @@
     }
     .logo p {
       font-size: 0.75rem;
-      color: #99a4dd;
+      color: #b9c4ff;
       margin-top: 4px;
     }
     .hours-badge {
       background: #0f1322cc;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(12px);
       padding: 0.6rem 1.4rem;
       border-radius: 3rem;
-      border: 1px solid #2a3256;
+      border: 1px solid #3a457a;
       font-size: 0.85rem;
       font-weight: 500;
       display: flex;
       align-items: center;
       gap: 8px;
-    }
-    .hours-badge i {
-      color: #6d7eff;
     }
 
     /* section titles */
@@ -90,6 +114,11 @@
       display: flex;
       align-items: center;
       gap: 14px;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(4px);
+      width: fit-content;
+      padding-right: 1.5rem;
+      border-radius: 60px;
     }
     .section-title i {
       background: linear-gradient(145deg, #1a1f38, #0f1324);
@@ -107,22 +136,22 @@
       margin-bottom: 2.2rem;
     }
 
-    /* card modern glassmorphism */
+    /* card modern */
     .card {
-      background: rgba(18, 22, 38, 0.7);
-      backdrop-filter: blur(6px);
+      background: rgba(18, 22, 42, 0.55);
+      backdrop-filter: blur(12px);
       border-radius: 2rem;
       padding: 1.4rem;
-      border: 1px solid rgba(80, 100, 255, 0.25);
-      transition: all 0.25s ease;
+      border: 1px solid rgba(80, 100, 255, 0.35);
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
       cursor: pointer;
       box-shadow: 0 20px 32px -16px rgba(0, 0, 0, 0.5);
     }
     .card:hover {
-      transform: translateY(-6px);
-      border-color: #5f72ff;
-      background: rgba(28, 34, 58, 0.85);
-      box-shadow: 0 24px 38px -12px #2e3bdd30;
+      transform: translateY(-8px) scale(1.01);
+      border-color: #7c8eff;
+      background: rgba(30, 36, 65, 0.75);
+      box-shadow: 0 28px 40px -12px #2e3bdd60;
     }
     .card-header {
       display: flex;
@@ -135,10 +164,12 @@
       font-size: 1.55rem;
       font-weight: 700;
       letter-spacing: -0.3px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     .badge-type {
       font-size: 0.7rem;
-      background: #262e4e;
+      background: #262e54cc;
+      backdrop-filter: blur(4px);
       padding: 4px 12px;
       border-radius: 40px;
       font-weight: 600;
@@ -146,11 +177,11 @@
     .price-block {
       margin: 1rem 0 0.6rem 0;
     }
-    /* Hanya menampilkan harga utama tanpa teks tambahan "Lewat Saya +Rp5.000" */
     .price-reseller {
       font-size: 1.35rem;
       font-weight: 800;
-      background: linear-gradient(95deg, #232b4e, #181e3c);
+      background: linear-gradient(95deg, #1f264ccc, #131834cc);
+      backdrop-filter: blur(4px);
       padding: 8px 18px;
       border-radius: 40px;
       display: inline-flex;
@@ -166,29 +197,22 @@
     .price-reseller .rp-value {
       color: #ffffff;
       font-weight: 800;
-      letter-spacing: 0.5px;
-    }
-    .price-reseller small {
-      font-size: 0.7rem;
-      font-weight: 400;
-      color: #b9c3ff;
-      margin-left: 4px;
     }
     .divider-light {
       height: 1px;
-      background: #2c3357;
+      background: #3a4270;
       margin: 12px 0;
     }
     .note-item {
       font-size: 0.72rem;
-      color: #9ca7df;
+      color: #c6d0ff;
       display: flex;
       align-items: center;
       gap: 6px;
       margin: 8px 0;
     }
     .wa-hint {
-      background: #1b213e;
+      background: #1f2546cc;
       border-radius: 32px;
       padding: 6px 12px;
       font-size: 0.7rem;
@@ -198,13 +222,14 @@
       gap: 6px;
     }
 
-    /* info operational panel - rapi & modern */
+    /* info panel */
     .info-panel {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       gap: 1.5rem;
-      background: linear-gradient(115deg, #0d1225, #0a0e1e);
+      background: rgba(10, 14, 30, 0.65);
+      backdrop-filter: blur(16px);
       border-radius: 2rem;
       padding: 1.5rem 2rem;
       margin: 2rem 0 1.8rem;
@@ -222,19 +247,11 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      border-left: 3px solid #5f72ff;
+      border-left: 3px solid #7c8eff;
       padding-left: 12px;
     }
-    .opening-details p {
-      margin: 6px 0;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
     .badge-time {
-      background: #1e254a;
+      background: #1e254acc;
       padding: 2px 10px;
       border-radius: 40px;
       font-family: monospace;
@@ -242,7 +259,8 @@
       font-weight: 600;
     }
     .warning-note {
-      background: #1a1730;
+      background: #1a1730cc;
+      backdrop-filter: blur(4px);
       padding: 8px 12px;
       border-radius: 18px;
       margin-top: 12px;
@@ -250,7 +268,7 @@
       border-left: 2px solid #ffaa44;
     }
     .order-method {
-      background: #10142e;
+      background: #10142ecc;
       border-radius: 1.5rem;
       padding: 0.8rem 1rem;
       margin: 12px 0;
@@ -269,10 +287,10 @@
     footer {
       margin-top: 2rem;
       text-align: center;
-      border-top: 1px solid #282f55;
+      border-top: 1px solid #3a4270;
       padding-top: 1.8rem;
       font-size: 0.8rem;
-      color: #a6b2e6;
+      color: #bdc6ff;
     }
     .social-links {
       display: flex;
@@ -281,13 +299,14 @@
       margin: 1rem 0;
     }
     .social-links a {
-      color: #bbc7ff;
+      color: #cdd6ff;
       font-size: 1.8rem;
       transition: 0.2s;
     }
     .social-links a:hover {
       color: white;
-      transform: scale(1.08);
+      transform: scale(1.1);
+      text-shadow: 0 0 8px #7c8eff;
     }
     @media (max-width: 760px) {
       body {
@@ -305,22 +324,19 @@
       .section-title {
         font-size: 1.5rem;
       }
-      .product-name {
-        font-size: 1.3rem;
-      }
-      .price-reseller {
-        font-size: 1.2rem;
-        padding: 6px 14px;
-      }
-    }
-    .card {
-      cursor: pointer;
     }
   </style>
 </head>
 <body>
+
+<!-- EFEK BINTIK BERJALAN (CANVAS DOTS) -->
+<div class="moving-dots">
+  <canvas id="dotCanvas"></canvas>
+</div>
+<div class="gradient-overlay"></div>
+
 <div class="container">
-  <!-- Header brand -->
+  <!-- Header -->
   <div class="brand">
     <div class="logo">
       <h1>⚡ ACR NEXUS</h1>
@@ -343,7 +359,7 @@
   </div>
   <div class="grid" id="cashGrid"></div>
 
-  <!-- INFO OPERASIONAL & ORDER (rapi tanpa distraksi) -->
+  <!-- INFO OPERASIONAL -->
   <div class="info-panel">
     <div class="opening-box">
       <h4><i class="far fa-clock"></i> JAM OPERASIONAL</h4>
@@ -376,66 +392,140 @@
       <a href="https://www.tiktok.com/@raken.store.asli?_r=1&_t=ZS-974R8mvPLQj" target="_blank" aria-label="TikTok Official ACR NEXUS">
         <i class="fab fa-tiktok"></i>
       </a>
+      <a href="#" style="opacity:0.7;"><i class="fab fa-instagram"></i></a>
+      <a href="#" style="opacity:0.7;"><i class="fab fa-twitter"></i></a>
     </div>
     <div style="margin-top: 8px; font-size: 0.7rem;">📱 TikTok: @raken.store.asli | #ACRNEXUS</div>
   </footer>
 </div>
 
 <script>
-  // Data GAMEPASS (harga reseller / "Lewat Saya" yang ditampilkan)
-  // Teks tambahan "Lewat Saya +Rp5.000" sudah dihilangkan sesuai permintaan.
+  // ========== EFEK BINTIK BERJALAN DENGAN CANVAS ==========
+  const canvas = document.getElementById('dotCanvas');
+  let ctx = canvas.getContext('2d');
+  let dots = [];
+  let dotCount = 180;  // jumlah bintik berjalan
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  class MovingDot {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.radius = Math.random() * 2 + 1.2;  // bintik kecil antara 1.2 - 3.2px
+      this.speedX = (Math.random() - 0.5) * 0.6;
+      this.speedY = (Math.random() - 0.5) * 0.6;
+      this.opacity = Math.random() * 0.5 + 0.2;
+      this.color = `rgba(180, 200, 255, ${this.opacity})`;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      // wrap around tepi canvas agar terus berjalan
+      if (this.x < -10) this.x = canvas.width + 10;
+      if (this.x > canvas.width + 10) this.x = -10;
+      if (this.y < -10) this.y = canvas.height + 10;
+      if (this.y > canvas.height + 10) this.y = -10;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+      // efek glow tipis untuk bintik
+      ctx.shadowBlur = 4;
+      ctx.shadowColor = "rgba(100, 150, 255, 0.5)";
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  function initDots() {
+    dots = [];
+    for (let i = 0; i < dotCount; i++) {
+      dots.push(new MovingDot());
+    }
+  }
+
+  function animateDots() {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // gradasi transparan untuk trail halus
+    ctx.fillStyle = "rgba(10, 12, 26, 0.08)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    for (let dot of dots) {
+      dot.update();
+      dot.draw();
+    }
+    requestAnimationFrame(animateDots);
+  }
+
+  function setupCanvas() {
+    resizeCanvas();
+    initDots();
+    animateDots();
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      initDots(); // reset posisi dot agar sesuai ukuran baru
+    });
+  }
+
+  setupCanvas();
+
+  // ========== DATA PRODUK & FUNGSI WA ==========
+  // Hanya menampilkan harga spesial (Lewat Saya) sebagai harga real
   const gamepassList = [
-    { name: "Radio", storePrice: 4000, resellerPrice: 6000, desc: "Akses radio kustom" },
-    { name: "Suspension", storePrice: 4000, resellerPrice: 7000, desc: "Suspension tuning" },
-    { name: "Premium Accessories", storePrice: 7000, resellerPrice: 12000, desc: "Aksesoris premium" },
-    { name: "Paint Pass", storePrice: 8000, resellerPrice: 13000, desc: "Warna eksklusif" },
-    { name: "Exclusive Rims", storePrice: 9000, resellerPrice: 14000, desc: "Velg limited" },
-    { name: "Custom Plate", storePrice: 9000, resellerPrice: 14000, desc: "Plat nomor custom" },
-    { name: "Slot Expansion", storePrice: 11000, resellerPrice: 16000, desc: "+ slot kendaraan" },
-    { name: "Dragspec", storePrice: 12000, resellerPrice: 17000, desc: "Spec drag race" },
-    { name: "Luxury Pass", storePrice: 13000, resellerPrice: 18000, desc: "Pass mewah" },
-    { name: "Police Pass", storePrice: 16000, resellerPrice: 21000, desc: "Fitur kepolisian" },
-    { name: "2x Paycheck", storePrice: 55000, resellerPrice: 60000, desc: "Gaji ganda permanen" }
+    { name: "Radio", specialPrice: 6000, desc: "Akses radio kustom" },
+    { name: "Suspension", specialPrice: 7000, desc: "Suspension tuning" },
+    { name: "Premium Accessories", specialPrice: 12000, desc: "Aksesoris premium" },
+    { name: "Paint Pass", specialPrice: 13000, desc: "Warna eksklusif" },
+    { name: "Exclusive Rims", specialPrice: 14000, desc: "Velg limited" },
+    { name: "Custom Plate", specialPrice: 14000, desc: "Plat nomor custom" },
+    { name: "Slot Expansion", specialPrice: 16000, desc: "+ slot kendaraan" },
+    { name: "Dragspec", specialPrice: 17000, desc: "Spec drag race" },
+    { name: "Luxury Pass", specialPrice: 18000, desc: "Pass mewah" },
+    { name: "Police Pass", specialPrice: 21000, desc: "Fitur kepolisian" },
+    { name: "2x Paycheck", specialPrice: 60000, desc: "Gaji ganda permanen" }
   ];
 
   const cashList = [
-    { nominal: "5.000.000", storePrice: 3000, resellerPrice: 5000 },
-    { nominal: "10.000.000", storePrice: 5000, resellerPrice: 10000 },
-    { nominal: "50.000.000", storePrice: 8000, resellerPrice: 13000 },
-    { nominal: "100.000.000", storePrice: 11000, resellerPrice: 16000 },
-    { nominal: "500.000.000", storePrice: 42000, resellerPrice: 47000 }
+    { nominal: "5.000.000", specialPrice: 5000 },
+    { nominal: "10.000.000", specialPrice: 10000 },
+    { nominal: "50.000.000", specialPrice: 13000 },
+    { nominal: "100.000.000", specialPrice: 16000 },
+    { nominal: "500.000.000", specialPrice: 47000 }
   ];
 
   function formatRupiah(angka) {
     return new Intl.NumberFormat('id-ID').format(angka);
   }
 
-  // Fungsi untuk membuat link WhatsApp (tetap mengirimkan info store & reseller sebagai referensi untuk admin)
-  function getWALink(productTitle, isGamepass, nominalRaw = null, priceStore, priceReseller) {
-    let productType = "";
+  // WA Message hanya mencantumkan harga spesial (Lewat Saya) sebagai harga real
+  function getWALink(productTitle, isGamepass, nominalRaw = null, specialPrice) {
+    let productLine = "";
     if (isGamepass) {
-      productType = `🎮 GAMEPASS: ${productTitle}`;
+      productLine = `🎮 GAMEPASS: ${productTitle}`;
     } else {
-      productType = `💰 CASH: ${nominalRaw} (${productTitle})`;
+      productLine = `💰 CASH: ${nominalRaw} (${productTitle})`;
     }
-    const storePriceRp = `Rp ${formatRupiah(priceStore)}`;
-    const resellerPriceRp = `Rp ${formatRupiah(priceReseller)}`;
-    const warningMsg = "⚠️ PERINGATAN: Jika membeli via Store Official, uang TIDAK BISA KEMBALI meskipun gamepass tidak masuk. Disarankan via sistem kami untuk keamanan ekstra.";
-    const text = `Halo ACR NEXUS! Saya ingin order produk berikut:%0A%0A${productType}%0A%0A🏬 Harga Store Resmi: ${storePriceRp}%0A✨ Harga Spesial (Lewat Saya): ${resellerPriceRp}%0A%0A${warningMsg}%0A%0ASaya memilih opsi: [Store/Spesial] %0APembayaran GoPay QRIS. Mohon panduan selanjutnya. Terima kasih!`;
-    return `https://wa.me/6285781209423?text=${text}`;
+    const specialFormatted = `Rp ${formatRupiah(specialPrice)}`;
+    const msg = `Halo ACR NEXUS! Saya ingin order produk berikut:%0A%0A${productLine}%0A%0A✨ Harga Spesial (Lewat Saya): ${specialFormatted} (Harga Real)%0A%0A⚠️ Catatan: Pembelian via store official beresiko uang tidak kembali jika gamepass gagal. Saya memilih layanan terpercaya.%0A%0AMetode Pembayaran: GoPay QRIS.%0ATolong panduan selanjutnya. Terima kasih!`;
+    return `https://wa.me/6285781209423?text=${msg}`;
   }
 
-  // Render GAMEPASS — tanpa kata "Lewat Saya +Rp5.000", hanya harga bersih
+  // Render Gamepass
   const gamepassGrid = document.getElementById('gamepassGrid');
   function renderGamepass() {
     gamepassGrid.innerHTML = '';
     gamepassList.forEach(item => {
       const card = document.createElement('div');
       card.className = 'card';
-      card.addEventListener('click', (e) => {
-        // jika ada tombol palsu tidak mengganggu
-        if (e.target.closest('.stop-prop')) return;
-        const waUrl = getWALink(item.name, true, null, item.storePrice, item.resellerPrice);
+      card.addEventListener('click', () => {
+        const waUrl = getWALink(item.name, true, null, item.specialPrice);
         window.open(waUrl, '_blank');
       });
       card.innerHTML = `
@@ -445,9 +535,8 @@
         </div>
         <div class="price-block">
           <div class="price-reseller">
-            <i class="fas fa-tag"></i> 
-            <span class="rp-value">Rp ${formatRupiah(item.resellerPrice)}</span>
-            <small></small>
+            <i class="fas fa-gem"></i> 
+            <span class="rp-value">Rp ${formatRupiah(item.specialPrice)}</span>
           </div>
         </div>
         <div class="divider-light"></div>
@@ -458,7 +547,7 @@
     });
   }
 
-  // Render CASH — tanpa embel-embel "Lewat Saya +Rp5.000"
+  // Render Cash
   const cashGrid = document.getElementById('cashGrid');
   function renderCash() {
     cashGrid.innerHTML = '';
@@ -466,7 +555,7 @@
       const card = document.createElement('div');
       card.className = 'card';
       card.addEventListener('click', () => {
-        const waLink = getWALink(`${cash.nominal} Cash`, false, cash.nominal, cash.storePrice, cash.resellerPrice);
+        const waLink = getWALink(`${cash.nominal} Cash`, false, cash.nominal, cash.specialPrice);
         window.open(waLink, '_blank');
       });
       card.innerHTML = `
@@ -477,7 +566,7 @@
         <div class="price-block">
           <div class="price-reseller">
             <i class="fas fa-coins"></i> 
-            <span class="rp-value">Rp ${formatRupiah(cash.resellerPrice)}</span>
+            <span class="rp-value">Rp ${formatRupiah(cash.specialPrice)}</span>
           </div>
         </div>
         <div class="divider-light"></div>
