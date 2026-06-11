@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>ACR NEXUS | Gamepass & Cash Store — Modern Aesthetic</title>
+  <title>ACR NEXUS | Gamepass & Cash Store — Harga Store & Spesial</title>
   <!-- Google Fonts & Font Awesome -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -24,7 +24,7 @@
       background: #0a0c1a;
     }
 
-    /* ========== EFEK BINTIK BERJALAN (ANIMATED DOTS / SCINTILLATING) ========== */
+    /* ========== EFEK BINTIK BERJALAN (CANVAS DOTS) ========== */
     .moving-dots {
       position: fixed;
       top: 0;
@@ -36,7 +36,6 @@
       overflow: hidden;
     }
 
-    /* Canvas untuk partikel bintik bergerak */
     #dotCanvas {
       position: absolute;
       top: 0;
@@ -131,7 +130,7 @@
     /* grid produk */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.6rem;
       margin-bottom: 2.2rem;
     }
@@ -176,27 +175,50 @@
     }
     .price-block {
       margin: 1rem 0 0.6rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
-    .price-reseller {
-      font-size: 1.35rem;
-      font-weight: 800;
+    /* Harga Store */
+    .price-store {
+      font-size: 0.95rem;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 6px 12px;
+      border-radius: 30px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+    }
+    .price-store i {
+      color: #88aaff;
+    }
+    .price-store span {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-left: 4px;
+    }
+    /* Harga Spesial (Lewat Saya) */
+    .price-special {
+      font-size: 1rem;
       background: linear-gradient(95deg, #1f264ccc, #131834cc);
       backdrop-filter: blur(4px);
-      padding: 8px 18px;
-      border-radius: 40px;
+      padding: 6px 12px;
+      border-radius: 30px;
       display: inline-flex;
-      align-items: baseline;
+      align-items: center;
       gap: 8px;
-      border-left: 4px solid #ffe484;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      width: fit-content;
+      border-left: 3px solid #ffe484;
     }
-    .price-reseller i {
+    .price-special i {
       color: #ffd966;
-      font-size: 1.2rem;
     }
-    .price-reseller .rp-value {
-      color: #ffffff;
-      font-weight: 800;
+    .price-special strong {
+      font-size: 1.25rem;
+      color: #ffe484;
+      margin-left: 4px;
     }
     .divider-light {
       height: 1px;
@@ -324,12 +346,15 @@
       .section-title {
         font-size: 1.5rem;
       }
+      .price-store span, .price-special strong {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- EFEK BINTIK BERJALAN (CANVAS DOTS) -->
+<!-- EFEK BINTIK BERJALAN (CANVAS) -->
 <div class="moving-dots">
   <canvas id="dotCanvas"></canvas>
 </div>
@@ -404,7 +429,7 @@
   const canvas = document.getElementById('dotCanvas');
   let ctx = canvas.getContext('2d');
   let dots = [];
-  let dotCount = 180;  // jumlah bintik berjalan
+  let dotCount = 200;  // jumlah bintik berjalan
 
   function resizeCanvas() {
     canvas.width = window.innerWidth;
@@ -415,29 +440,28 @@
     constructor() {
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
-      this.radius = Math.random() * 2 + 1.2;  // bintik kecil antara 1.2 - 3.2px
-      this.speedX = (Math.random() - 0.5) * 0.6;
-      this.speedY = (Math.random() - 0.5) * 0.6;
+      this.radius = Math.random() * 2.2 + 1.0;  // bintik kecil
+      this.speedX = (Math.random() - 0.5) * 0.5;
+      this.speedY = (Math.random() - 0.5) * 0.5;
       this.opacity = Math.random() * 0.5 + 0.2;
-      this.color = `rgba(180, 200, 255, ${this.opacity})`;
+      this.color = `rgba(170, 200, 255, ${this.opacity})`;
     }
     update() {
       this.x += this.speedX;
       this.y += this.speedY;
-      // wrap around tepi canvas agar terus berjalan
-      if (this.x < -10) this.x = canvas.width + 10;
-      if (this.x > canvas.width + 10) this.x = -10;
-      if (this.y < -10) this.y = canvas.height + 10;
-      if (this.y > canvas.height + 10) this.y = -10;
+      // wrap around
+      if (this.x < -20) this.x = canvas.width + 20;
+      if (this.x > canvas.width + 20) this.x = -20;
+      if (this.y < -20) this.y = canvas.height + 20;
+      if (this.y > canvas.height + 20) this.y = -20;
     }
     draw() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
       ctx.fillStyle = this.color;
       ctx.fill();
-      // efek glow tipis untuk bintik
-      ctx.shadowBlur = 4;
-      ctx.shadowColor = "rgba(100, 150, 255, 0.5)";
+      ctx.shadowBlur = 3;
+      ctx.shadowColor = "rgba(100, 150, 255, 0.4)";
       ctx.fill();
       ctx.shadowBlur = 0;
     }
@@ -453,8 +477,8 @@
   function animateDots() {
     if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // gradasi transparan untuk trail halus
-    ctx.fillStyle = "rgba(10, 12, 26, 0.08)";
+    // efek trail halus
+    ctx.fillStyle = "rgba(10, 12, 26, 0.1)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
     for (let dot of dots) {
@@ -470,54 +494,54 @@
     animateDots();
     window.addEventListener('resize', () => {
       resizeCanvas();
-      initDots(); // reset posisi dot agar sesuai ukuran baru
+      initDots();
     });
   }
-
   setupCanvas();
 
-  // ========== DATA PRODUK & FUNGSI WA ==========
-  // Hanya menampilkan harga spesial (Lewat Saya) sebagai harga real
+  // ========== DATA PRODUK (HARGA STORE & HARGA SPESIAL LEWAT SAYA) ==========
   const gamepassList = [
-    { name: "Radio", specialPrice: 6000, desc: "Akses radio kustom" },
-    { name: "Suspension", specialPrice: 7000, desc: "Suspension tuning" },
-    { name: "Premium Accessories", specialPrice: 12000, desc: "Aksesoris premium" },
-    { name: "Paint Pass", specialPrice: 13000, desc: "Warna eksklusif" },
-    { name: "Exclusive Rims", specialPrice: 14000, desc: "Velg limited" },
-    { name: "Custom Plate", specialPrice: 14000, desc: "Plat nomor custom" },
-    { name: "Slot Expansion", specialPrice: 16000, desc: "+ slot kendaraan" },
-    { name: "Dragspec", specialPrice: 17000, desc: "Spec drag race" },
-    { name: "Luxury Pass", specialPrice: 18000, desc: "Pass mewah" },
-    { name: "Police Pass", specialPrice: 21000, desc: "Fitur kepolisian" },
-    { name: "2x Paycheck", specialPrice: 60000, desc: "Gaji ganda permanen" }
+    { name: "Radio", storePrice: 4000, specialPrice: 6000, desc: "Akses radio kustom" },
+    { name: "Suspension", storePrice: 4000, specialPrice: 7000, desc: "Suspension tuning" },
+    { name: "Premium Accessories", storePrice: 7000, specialPrice: 12000, desc: "Aksesoris premium" },
+    { name: "Paint Pass", storePrice: 8000, specialPrice: 13000, desc: "Warna eksklusif" },
+    { name: "Exclusive Rims", storePrice: 9000, specialPrice: 14000, desc: "Velg limited" },
+    { name: "Custom Plate", storePrice: 9000, specialPrice: 14000, desc: "Plat nomor custom" },
+    { name: "Slot Expansion", storePrice: 11000, specialPrice: 16000, desc: "+ slot kendaraan" },
+    { name: "Dragspec", storePrice: 12000, specialPrice: 17000, desc: "Spec drag race" },
+    { name: "Luxury Pass", storePrice: 13000, specialPrice: 18000, desc: "Pass mewah" },
+    { name: "Police Pass", storePrice: 16000, specialPrice: 21000, desc: "Fitur kepolisian" },
+    { name: "2x Paycheck", storePrice: 55000, specialPrice: 60000, desc: "Gaji ganda permanen" }
   ];
 
   const cashList = [
-    { nominal: "5.000.000", specialPrice: 5000 },
-    { nominal: "10.000.000", specialPrice: 10000 },
-    { nominal: "50.000.000", specialPrice: 13000 },
-    { nominal: "100.000.000", specialPrice: 16000 },
-    { nominal: "500.000.000", specialPrice: 47000 }
+    { nominal: "5.000.000", storePrice: 3000, specialPrice: 5000 },
+    { nominal: "10.000.000", storePrice: 5000, specialPrice: 10000 },
+    { nominal: "50.000.000", storePrice: 8000, specialPrice: 13000 },
+    { nominal: "100.000.000", storePrice: 11000, specialPrice: 16000 },
+    { nominal: "500.000.000", storePrice: 42000, specialPrice: 47000 }
   ];
 
   function formatRupiah(angka) {
     return new Intl.NumberFormat('id-ID').format(angka);
   }
 
-  // WA Message hanya mencantumkan harga spesial (Lewat Saya) sebagai harga real
-  function getWALink(productTitle, isGamepass, nominalRaw = null, specialPrice) {
+  // FUNGSI WA: menampilkan dua harga (Store & Lewat Saya)
+  function getWALink(productTitle, isGamepass, nominalRaw = null, storePrice, specialPrice) {
     let productLine = "";
     if (isGamepass) {
       productLine = `🎮 GAMEPASS: ${productTitle}`;
     } else {
       productLine = `💰 CASH: ${nominalRaw} (${productTitle})`;
     }
+    const storeFormatted = `Rp ${formatRupiah(storePrice)}`;
     const specialFormatted = `Rp ${formatRupiah(specialPrice)}`;
-    const msg = `Halo ACR NEXUS! Saya ingin order produk berikut:%0A%0A${productLine}%0A%0A✨ Harga Spesial (Lewat Saya): ${specialFormatted} (Harga Real)%0A%0A⚠️ Catatan: Pembelian via store official beresiko uang tidak kembali jika gamepass gagal. Saya memilih layanan terpercaya.%0A%0AMetode Pembayaran: GoPay QRIS.%0ATolong panduan selanjutnya. Terima kasih!`;
+    const warningMsg = "⚠️ PERINGATAN: Jika membeli via Store Official, uang TIDAK BISA KEMBALI meskipun gamepass tidak masuk. Disarankan via Lewat Saya untuk keamanan ekstra.";
+    const msg = `Halo ACR NEXUS! Saya ingin order produk berikut:%0A%0A${productLine}%0A%0A🏬 Harga Store Resmi: ${storeFormatted}%0A✨ Harga Spesial (Lewat Saya): ${specialFormatted}%0A%0A${warningMsg}%0A%0ASaya pilih opsi: [Store/Spesial] %0APembayaran GoPay QRIS. Mohon panduan selanjutnya. Terima kasih!`;
     return `https://wa.me/6285781209423?text=${msg}`;
   }
 
-  // Render Gamepass
+  // Render GAMEPASS (tampilkan dua harga)
   const gamepassGrid = document.getElementById('gamepassGrid');
   function renderGamepass() {
     gamepassGrid.innerHTML = '';
@@ -525,7 +549,7 @@
       const card = document.createElement('div');
       card.className = 'card';
       card.addEventListener('click', () => {
-        const waUrl = getWALink(item.name, true, null, item.specialPrice);
+        const waUrl = getWALink(item.name, true, null, item.storePrice, item.specialPrice);
         window.open(waUrl, '_blank');
       });
       card.innerHTML = `
@@ -534,9 +558,11 @@
           <div class="badge-type"><i class="fas fa-crown"></i> Gamepass</div>
         </div>
         <div class="price-block">
-          <div class="price-reseller">
-            <i class="fas fa-gem"></i> 
-            <span class="rp-value">Rp ${formatRupiah(item.specialPrice)}</span>
+          <div class="price-store">
+            <i class="fas fa-store"></i> STORE: <span>Rp ${formatRupiah(item.storePrice)}</span>
+          </div>
+          <div class="price-special">
+            <i class="fas fa-user-check"></i> LEWAT SAYA (+Rp5.000): <strong>Rp ${formatRupiah(item.specialPrice)}</strong>
           </div>
         </div>
         <div class="divider-light"></div>
@@ -547,7 +573,7 @@
     });
   }
 
-  // Render Cash
+  // Render CASH (tampilkan dua harga)
   const cashGrid = document.getElementById('cashGrid');
   function renderCash() {
     cashGrid.innerHTML = '';
@@ -555,7 +581,7 @@
       const card = document.createElement('div');
       card.className = 'card';
       card.addEventListener('click', () => {
-        const waLink = getWALink(`${cash.nominal} Cash`, false, cash.nominal, cash.specialPrice);
+        const waLink = getWALink(`${cash.nominal} Cash`, false, cash.nominal, cash.storePrice, cash.specialPrice);
         window.open(waLink, '_blank');
       });
       card.innerHTML = `
@@ -564,13 +590,15 @@
           <div class="badge-type"><i class="fas fa-dollar-sign"></i> Cash</div>
         </div>
         <div class="price-block">
-          <div class="price-reseller">
-            <i class="fas fa-coins"></i> 
-            <span class="rp-value">Rp ${formatRupiah(cash.specialPrice)}</span>
+          <div class="price-store">
+            <i class="fas fa-store"></i> STORE: <span>Rp ${formatRupiah(cash.storePrice)}</span>
+          </div>
+          <div class="price-special">
+            <i class="fas fa-hand-holding-usd"></i> LEWAT SAYA (+Rp5.000): <strong>Rp ${formatRupiah(cash.specialPrice)}</strong>
           </div>
         </div>
         <div class="divider-light"></div>
-        <div class="note-item"><i class="fas fa-bolt"></i> Top up saldo game instan</div>
+        <div class="note-item"><i class="fas fa-coins"></i> Top up saldo game instan</div>
         <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik kartu → langsung order</div>
       `;
       cashGrid.appendChild(card);
