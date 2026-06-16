@@ -1,612 +1,1241 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>ACR NEXUS | Gamepass & Cash Store — Harga Store & Spesial</title>
-  <!-- Google Fonts & Font Awesome -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ACR NEXUS | Store Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      color: #edf2ff;
-      scroll-behavior: smooth;
-      padding: 1.8rem;
-      position: relative;
-      min-height: 100vh;
-      background: #0a0c1a;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #edf2ff;
+            background: #0a0c1a;
+            min-height: 100vh;
+            padding: 1.2rem;
+            position: relative;
+        }
 
-    /* ========== EFEK BINTIK BERJALAN (CANVAS DOTS) ========== */
-    .moving-dots {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: radial-gradient(circle at 30% 40%, #0f1230, #020617);
-      overflow: hidden;
-    }
+        .moving-dots {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 30% 40%, #0f1230, #020617);
+            overflow: hidden;
+        }
 
-    #dotCanvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
+        #dotCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
 
-    /* Soft overlay gradien agar teks tetap terbaca */
-    .gradient-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(ellipse at 50% 40%, rgba(10, 20, 50, 0.4), rgba(2, 6, 23, 0.7));
-      z-index: -1;
-      pointer-events: none;
-    }
+        .gradient-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 40%, rgba(10, 20, 50, 0.4), rgba(2, 6, 23, 0.7));
+            z-index: -1;
+            pointer-events: none;
+        }
 
-    .container {
-      max-width: 1440px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-    }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
 
-    /* header premium glassmorphism */
-    .brand {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-      background: rgba(12, 16, 28, 0.45);
-      backdrop-filter: blur(14px);
-      padding: 1rem 2rem;
-      border-radius: 3rem;
-      border: 1px solid rgba(90, 110, 255, 0.4);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    }
-    .logo h1 {
-      font-size: 2.1rem;
-      font-weight: 800;
-      background: linear-gradient(130deg, #FFFFFF, #8f9eff, #b7c4ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: -0.5px;
-    }
-    .logo p {
-      font-size: 0.75rem;
-      color: #b9c4ff;
-      margin-top: 4px;
-    }
-    .hours-badge {
-      background: #0f1322cc;
-      backdrop-filter: blur(12px);
-      padding: 0.6rem 1.4rem;
-      border-radius: 3rem;
-      border: 1px solid #3a457a;
-      font-size: 0.85rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: rgba(12, 16, 28, 0.5);
+            backdrop-filter: blur(14px);
+            padding: 0.8rem 1.8rem;
+            border-radius: 3rem;
+            border: 1px solid rgba(90, 110, 255, 0.3);
+            margin-bottom: 1.5rem;
+        }
 
-    /* section titles */
-    .section-title {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin: 2rem 0 1.2rem 0;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      background: rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(4px);
-      width: fit-content;
-      padding-right: 1.5rem;
-      border-radius: 60px;
-    }
-    .section-title i {
-      background: linear-gradient(145deg, #1a1f38, #0f1324);
-      padding: 10px;
-      border-radius: 20px;
-      font-size: 1.4rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(130deg, #FFFFFF, #8f9eff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
 
-    /* grid produk */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.6rem;
-      margin-bottom: 2.2rem;
-    }
+        .logo p {
+            font-size: 0.65rem;
+            color: #b9c4ff;
+        }
 
-    /* card modern */
-    .card {
-      background: rgba(18, 22, 42, 0.55);
-      backdrop-filter: blur(12px);
-      border-radius: 2rem;
-      padding: 1.4rem;
-      border: 1px solid rgba(80, 100, 255, 0.35);
-      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      cursor: pointer;
-      box-shadow: 0 20px 32px -16px rgba(0, 0, 0, 0.5);
-    }
-    .card:hover {
-      transform: translateY(-8px) scale(1.01);
-      border-color: #7c8eff;
-      background: rgba(30, 36, 65, 0.75);
-      box-shadow: 0 28px 40px -12px #2e3bdd60;
-    }
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      flex-wrap: wrap;
-      margin-bottom: 0.8rem;
-    }
-    .product-name {
-      font-size: 1.55rem;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    .badge-type {
-      font-size: 0.7rem;
-      background: #262e54cc;
-      backdrop-filter: blur(4px);
-      padding: 4px 12px;
-      border-radius: 40px;
-      font-weight: 600;
-    }
-    .price-block {
-      margin: 1rem 0 0.6rem 0;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    /* Harga Store */
-    .price-store {
-      font-size: 0.95rem;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 6px 12px;
-      border-radius: 30px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      width: fit-content;
-    }
-    .price-store i {
-      color: #88aaff;
-    }
-    .price-store span {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #ffffff;
-      margin-left: 4px;
-    }
-    /* Harga Spesial (Lewat Saya) */
-    .price-special {
-      font-size: 1rem;
-      background: linear-gradient(95deg, #1f264ccc, #131834cc);
-      backdrop-filter: blur(4px);
-      padding: 6px 12px;
-      border-radius: 30px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      width: fit-content;
-      border-left: 3px solid #ffe484;
-    }
-    .price-special i {
-      color: #ffd966;
-    }
-    .price-special strong {
-      font-size: 1.25rem;
-      color: #ffe484;
-      margin-left: 4px;
-    }
-    .divider-light {
-      height: 1px;
-      background: #3a4270;
-      margin: 12px 0;
-    }
-    .note-item {
-      font-size: 0.72rem;
-      color: #c6d0ff;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin: 8px 0;
-    }
-    .wa-hint {
-      background: #1f2546cc;
-      border-radius: 32px;
-      padding: 6px 12px;
-      font-size: 0.7rem;
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
 
-    /* info panel */
-    .info-panel {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 1.5rem;
-      background: rgba(10, 14, 30, 0.65);
-      backdrop-filter: blur(16px);
-      border-radius: 2rem;
-      padding: 1.5rem 2rem;
-      margin: 2rem 0 1.8rem;
-      border: 1px solid #2d345b;
-      box-shadow: 0 12px 24px -8px rgba(0,0,0,0.5);
-    }
-    .opening-box, .order-box {
-      flex: 1;
-      min-width: 200px;
-    }
-    .opening-box h4, .order-box h4 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      border-left: 3px solid #7c8eff;
-      padding-left: 12px;
-    }
-    .badge-time {
-      background: #1e254acc;
-      padding: 2px 10px;
-      border-radius: 40px;
-      font-family: monospace;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-    .warning-note {
-      background: #1a1730cc;
-      backdrop-filter: blur(4px);
-      padding: 8px 12px;
-      border-radius: 18px;
-      margin-top: 12px;
-      font-size: 0.75rem;
-      border-left: 2px solid #ffaa44;
-    }
-    .order-method {
-      background: #10142ecc;
-      border-radius: 1.5rem;
-      padding: 0.8rem 1rem;
-      margin: 12px 0;
-    }
-    .btn-wa-sim {
-      background: #25D366;
-      color: #0a0c12;
-      border-radius: 40px;
-      padding: 6px 14px;
-      font-weight: bold;
-      font-size: 0.8rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    footer {
-      margin-top: 2rem;
-      text-align: center;
-      border-top: 1px solid #3a4270;
-      padding-top: 1.8rem;
-      font-size: 0.8rem;
-      color: #bdc6ff;
-    }
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 28px;
-      margin: 1rem 0;
-    }
-    .social-links a {
-      color: #cdd6ff;
-      font-size: 1.8rem;
-      transition: 0.2s;
-    }
-    .social-links a:hover {
-      color: white;
-      transform: scale(1.1);
-      text-shadow: 0 0 8px #7c8eff;
-    }
-    @media (max-width: 760px) {
-      body {
-        padding: 1rem;
-      }
-      .brand {
-        flex-direction: column;
-        align-items: start;
-        gap: 12px;
-        padding: 1rem;
-      }
-      .info-panel {
-        flex-direction: column;
-      }
-      .section-title {
-        font-size: 1.5rem;
-      }
-      .price-store span, .price-special strong {
-        font-size: 1rem;
-      }
-    }
-  </style>
+        .nav-btn {
+            background: rgba(30, 40, 80, 0.5);
+            border: 1px solid rgba(80, 100, 255, 0.3);
+            color: #c6d0ff;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            backdrop-filter: blur(4px);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .nav-btn:hover,
+        .nav-btn.active {
+            background: rgba(60, 80, 200, 0.5);
+            border-color: #7c8eff;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(60, 80, 255, 0.2);
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 1.5rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            padding-right: 1.2rem;
+            border-radius: 40px;
+            width: fit-content;
+        }
+
+        .section-title i {
+            background: #1a1f38;
+            padding: 8px 12px;
+            border-radius: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card {
+            background: rgba(18, 22, 42, 0.55);
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            border: 1px solid rgba(80, 100, 255, 0.3);
+            transition: 0.3s;
+            cursor: pointer;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: #7c8eff;
+            background: rgba(30, 36, 65, 0.75);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .badge-type {
+            font-size: 0.6rem;
+            background: #262e54cc;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+
+        .price-block {
+            margin: 0.6rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .price-store {
+            font-size: 0.8rem;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            width: fit-content;
+        }
+
+        .price-store span {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .price-special {
+            font-size: 0.85rem;
+            background: linear-gradient(95deg, #1f264ccc, #131834cc);
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-left: 3px solid #ffe484;
+            width: fit-content;
+        }
+
+        .price-special strong {
+            color: #ffe484;
+        }
+
+        .divider-light {
+            height: 1px;
+            background: #3a4270;
+            margin: 8px 0;
+        }
+
+        .note-item {
+            font-size: 0.68rem;
+            color: #c6d0ff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 4px 0;
+        }
+
+        .wa-hint {
+            background: #1f2546cc;
+            border-radius: 30px;
+            padding: 4px 10px;
+            font-size: 0.65rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-panel {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1rem;
+            background: rgba(10, 14, 30, 0.6);
+            backdrop-filter: blur(16px);
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.8rem;
+            margin: 1.5rem 0;
+            border: 1px solid #2d345b;
+        }
+
+        .info-panel h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 3px solid #7c8eff;
+            padding-left: 10px;
+            margin-bottom: 6px;
+        }
+
+        .info-panel p {
+            font-size: 0.8rem;
+            margin: 4px 0;
+        }
+
+        .badge-time {
+            background: #1e254acc;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .warning-note {
+            background: #1a1730cc;
+            padding: 6px 10px;
+            border-radius: 14px;
+            font-size: 0.7rem;
+            border-left: 2px solid #ffaa44;
+            margin-top: 6px;
+        }
+
+        /* ===== PRICELIST BLOCK MODERN ===== */
+        .pricelist-block {
+            background: rgba(18, 22, 42, 0.6);
+            backdrop-filter: blur(14px);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            border: 1px solid rgba(80, 100, 255, 0.2);
+            margin: 1.2rem 0;
+            box-shadow: 0 20px 40px -16px rgba(0, 0, 0, 0.5);
+        }
+
+        .pricelist-block .main-title {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 4px;
+        }
+
+        .pricelist-block .sub-title {
+            text-align: center;
+            color: #99a4dd;
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .pricelist-block .list-header {
+            color: #b7c4ff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin: 16px 0 10px 0;
+            padding-left: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pricelist-block .list-header i {
+            color: #ffd700;
+        }
+
+        .pricelist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 8px;
+        }
+
+        .pricelist-grid .item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 14px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: 0.25s;
+            border: 1px solid rgba(80, 100, 255, 0.08);
+        }
+
+        .pricelist-grid .item:hover {
+            background: rgba(30, 36, 65, 0.6);
+            border-color: #7c8eff;
+            transform: translateX(3px);
+        }
+
+        .pricelist-grid .item .name {
+            color: #c6d0ff;
+        }
+
+        .pricelist-grid .item .price {
+            color: #ffe484;
+            font-weight: 700;
+        }
+
+        .pricelist-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1.2rem;
+            margin-top: 1.2rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #3a4270;
+        }
+
+        .pricelist-info .info-col {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .pricelist-info .info-col h5 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #b7c4ff;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pricelist-info .info-col p {
+            font-size: 0.75rem;
+            color: #99a4dd;
+            margin: 2px 0;
+        }
+
+        .pricelist-info .info-col p strong {
+            color: #edf2ff;
+        }
+
+        .btn-order-center {
+            text-align: center;
+            margin-top: 1.2rem;
+        }
+
+        .wa-btn {
+            background: #25D366;
+            color: #0a0c12;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
+        }
+
+        .wa-btn:hover {
+            transform: scale(1.04);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        /* ===== WELCOME SECTION ===== */
+        .welcome-section {
+            background: rgba(18, 22, 42, 0.3);
+            backdrop-filter: blur(8px);
+            border-radius: 1.5rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(80, 100, 255, 0.12);
+            text-align: center;
+        }
+
+        .welcome-section h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #8f9eff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .welcome-section p {
+            color: #99a4dd;
+            font-size: 0.9rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .welcome-section .highlight {
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        /* ===== KATEGORI CEPAT ===== */
+        .quick-category {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .quick-category .card {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .quick-category .card i {
+            font-size: 1.8rem;
+        }
+
+        .quick-category .card h3 {
+            margin-top: 4px;
+            font-size: 0.9rem;
+        }
+
+        /* Joki list */
+        .joki-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 6px;
+        }
+
+        .joki-list .item {
+            background: rgba(18, 22, 42, 0.4);
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid rgba(80, 100, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .joki-list .item:hover {
+            background: rgba(30, 36, 65, 0.6);
+        }
+
+        .joki-list .item span {
+            color: #ffe484;
+            font-weight: 700;
+        }
+
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            border-top: 1px solid #3a4270;
+            padding-top: 1.2rem;
+            font-size: 0.75rem;
+            color: #bdc6ff;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 0.6rem 0;
+        }
+
+        .social-links a {
+            color: #cdd6ff;
+            font-size: 1.5rem;
+            transition: 0.2s;
+        }
+
+        .social-links a:hover {
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 0.8rem;
+            }
+            .header {
+                flex-direction: column;
+                align-items: start;
+                gap: 8px;
+                padding: 0.8rem 1.2rem;
+            }
+            .nav-menu {
+                gap: 4px;
+            }
+            .nav-btn {
+                font-size: 0.65rem;
+                padding: 4px 10px;
+            }
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            .info-panel {
+                flex-direction: column;
+            }
+            .section-title {
+                font-size: 1.2rem;
+            }
+            .pricelist-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .pricelist-info {
+                flex-direction: column;
+            }
+            .welcome-section h2 {
+                font-size: 1.4rem;
+            }
+            .quick-category {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pricelist-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!-- EFEK BINTIK BERJALAN (CANVAS) -->
-<div class="moving-dots">
-  <canvas id="dotCanvas"></canvas>
-</div>
-<div class="gradient-overlay"></div>
+    <div class="moving-dots"><canvas id="dotCanvas"></canvas></div>
+    <div class="gradient-overlay"></div>
 
-<div class="container">
-  <!-- Header -->
-  <div class="brand">
-    <div class="logo">
-      <h1>⚡ ACR NEXUS</h1>
-      <p>gamepass & digital currency • instant delivery</p>
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo">
+                <h1>⚡ ACR NEXUS</h1>
+                <p>gamepass & digital currency • instant delivery</p>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-btn active" data-page="home">🏠 Home</button>
+                <button class="nav-btn" data-page="gamepass">🎮 Gamepass</button>
+                <button class="nav-btn" data-page="cash">💰 Cash</button>
+                <button class="nav-btn" data-page="freefire">🔥 FF</button>
+                <button class="nav-btn" data-page="ml">💎 ML</button>
+                <button class="nav-btn" data-page="joki">🎯 Joki</button>
+                <button class="nav-btn" data-page="logo">🎨 Logo</button>
+                <button class="nav-btn" data-page="pricelist">🏷️ Pricelist</button>
+            </div>
+        </div>
+
+        <!-- ===================== HOME ===================== -->
+        <div id="page-home" class="page active">
+            <div class="welcome-section">
+                <h2>🏠 Selamat Datang di ACR NEXUS</h2>
+                <p>
+                    Tempat terbaik untuk <span class="highlight">Gamepass</span>, 
+                    <span class="highlight">Top Up Cash</span>, 
+                    <span class="highlight">Diamond Free Fire &amp; Mobile Legends</span>, 
+                    <span class="highlight">Jasa Joki</span>, dan 
+                    <span class="highlight">Desain Logo</span> keren! 
+                    🚀 Nikmati harga terbaik, proses cepat, dan pelayanan ramah 24/7.
+                </p>
+                <p style="margin-top:6px; font-size:0.8rem; color:#7c8eff;">
+                    <i class="fas fa-bolt"></i> Klik produk favoritmu, langsung order via WhatsApp!
+                </p>
+            </div>
+
+            <div class="quick-category">
+                <div class="card" onclick="navigateTo('gamepass')">
+                    <i class="fas fa-gamepad" style="color:#7c8eff;"></i>
+                    <h3>🎮 Gamepass</h3>
+                </div>
+                <div class="card" onclick="navigateTo('cash')">
+                    <i class="fas fa-coins" style="color:#ffd966;"></i>
+                    <h3>💰 Cash</h3>
+                </div>
+                <div class="card" onclick="navigateTo('freefire')">
+                    <i class="fas fa-fire" style="color:#ff6b35;"></i>
+                    <h3>🔥 Free Fire</h3>
+                </div>
+                <div class="card" onclick="navigateTo('ml')">
+                    <i class="fas fa-diamond" style="color:#00b4d8;"></i>
+                    <h3>💎 ML</h3>
+                </div>
+                <div class="card" onclick="navigateTo('joki')">
+                    <i class="fas fa-trophy" style="color:#ffd700;"></i>
+                    <h3>🎯 Joki</h3>
+                </div>
+                <div class="card" onclick="navigateTo('logo')">
+                    <i class="fas fa-paint-brush" style="color:#ff6b9d;"></i>
+                    <h3>🎨 Logo</h3>
+                </div>
+                <div class="card" onclick="navigateTo('pricelist')">
+                    <i class="fas fa-tags" style="color:#ffaa00;"></i>
+                    <h3>🏷️ Pricelist</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== GAMEPASS ===================== -->
+        <div id="page-gamepass" class="page">
+            <div class="section-title"><i class="fas fa-gamepad"></i> <span>🎮 DAFTAR GAMEPASS</span></div>
+            <p style="margin-bottom:0.5rem; font-size:0.8rem; color:#99a4dd;">Beli Langsung di Store / Resmi</p>
+            <div class="grid" id="gamepassGrid"></div>
+            <p style="margin:0.5rem 0 0.2rem 0; font-size:0.8rem; color:#ffd700;">Beli Lewat Saya (Ada tambahan Rp 5.000 PER ITEM)</p>
+            <div class="grid" id="gamepassResellerGrid"></div>
+            <div class="info-panel">
+                <div>
+                    <h4><i class="far fa-clock"></i> JAM OPERASIONAL</h4>
+                    <p><span class="badge-time">📅 Hari Biasa</span> <strong>02:30 WIB</strong></p>
+                    <p><span class="badge-time">🎉 Hari Libur</span> <strong>10:00 WIB</strong></p>
+                    <p><span class="badge-time">🔒 Tutup</span> <strong>21:00 WIB</strong></p>
+                </div>
+                <div>
+                    <h4><i class="fab fa-whatsapp"></i> KONTAK</h4>
+                    <p><i class="fab fa-whatsapp"></i> 085781209423</p>
+                    <p><i class="fab fa-tiktok"></i> @acrnexusstor.id</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== CASH ===================== -->
+        <div id="page-cash" class="page">
+            <div class="section-title"><i class="fas fa-coins"></i> <span>💰 UANG GAME (CASH)</span></div>
+            <div class="grid" id="cashGrid"></div>
+            <div class="info-panel">
+                <div>
+                    <h4><i class="far fa-clock"></i> JAM OPERASIONAL</h4>
+                    <p><span class="badge-time">📅 Hari Biasa</span> <strong>02:30 WIB</strong></p>
+                    <p><span class="badge-time">🎉 Hari Libur</span> <strong>10:00 WIB</strong></p>
+                    <p><span class="badge-time">🔒 Tutup</span> <strong>21:00 WIB</strong></p>
+                </div>
+                <div>
+                    <h4><i class="fab fa-whatsapp"></i> KONTAK</h4>
+                    <p><i class="fab fa-whatsapp"></i> 085781209423</p>
+                    <p><i class="fab fa-tiktok"></i> @acrnexusstor.id</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== FREEFIRE ===================== -->
+        <div id="page-freefire" class="page">
+            <div class="section-title"><i class="fas fa-fire"></i> <span>🔥 DIAMOND FREEFIRE</span></div>
+            <p style="font-size:0.85rem; color:#99a4dd; margin-bottom:1rem;">Upgrade BANDEL sekarang di ACR NEXUS!</p>
+            <div class="grid" id="ffGrid"></div>
+            <div class="info-panel">
+                <div>
+                    <h4><i class="far fa-clock"></i> JAM OPERASIONAL</h4>
+                    <p><span class="badge-time">📅 Hari Biasa</span> <strong>02:30 WIB</strong></p>
+                    <p><span class="badge-time">🎉 Hari Libur</span> <strong>10:00 WIB</strong></p>
+                    <p><span class="badge-time">🔒 Tutup</span> <strong>21:00 WIB</strong></p>
+                </div>
+                <div>
+                    <h4><i class="fab fa-whatsapp"></i> KONTAK</h4>
+                    <p><i class="fab fa-whatsapp"></i> 085781209423</p>
+                    <p><i class="fab fa-tiktok"></i> @acrnexusstor.id</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== MOBILE LEGENDS ===================== -->
+        <div id="page-ml" class="page">
+            <div class="section-title"><i class="fas fa-diamond"></i> <span>💎 DIAMOND MOBILE LEGENDS</span></div>
+            <p style="font-size:0.8rem; color:#99a4dd; margin-bottom:1rem;">Via ID & Server — harga terbaik!</p>
+            <div class="grid" id="mlGrid"></div>
+            <div class="info-panel">
+                <div>
+                    <h4><i class="far fa-clock"></i> JAM OPERASIONAL</h4>
+                    <p><span class="badge-time">📅 Hari Biasa</span> <strong>02:30 WIB</strong></p>
+                    <p><span class="badge-time">🎉 Hari Libur</span> <strong>10:00 WIB</strong></p>
+                    <p><span class="badge-time">🔒 Tutup</span> <strong>21:00 WIB</strong></p>
+                </div>
+                <div>
+                    <h4><i class="fab fa-whatsapp"></i> KONTAK</h4>
+                    <p><i class="fab fa-whatsapp"></i> 085781209423</p>
+                    <p><i class="fab fa-instagram"></i> @acrnexusstor.id</p>
+                    <p><i class="fab fa-tiktok"></i> @acrnexusstor.id</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== JOKI ===================== -->
+        <div id="page-joki" class="page">
+            <div class="section-title"><i class="fas fa-trophy"></i> <span>🎯 JASA JOKI FREE FIRE</span></div>
+            <p style="font-size:0.85rem; color:#ffd700; margin-bottom:0.5rem;">🔥 READY CSR &amp; BR RANKED | PROSES CEPAT &amp; AMAN</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                <div>
+                    <h4 style="color:#b7c4ff; margin-bottom:8px;">🏆 BR RANKED (KE HEROIC)</h4>
+                    <div class="joki-list" id="brList"></div>
+                    <p style="font-size:0.7rem; color:#99a4dd; margin-top:6px;">Heroic ➔ Master: Rp 15K / Bintang</p>
+                </div>
+                <div>
+                    <h4 style="color:#b7c4ff; margin-bottom:8px;">🔫 CS RANKED (PER BINTANG)</h4>
+                    <div class="joki-list" id="csList"></div>
+                </div>
+            </div>
+            <div class="info-panel" style="margin-top:1rem;">
+                <div>
+                    <h4><i class="fas fa-credit-card"></i> METODE PEMBAYARAN</h4>
+                    <p>DANA / GOPAY / QRIS</p>
+                </div>
+                <div>
+                    <h4><i class="fas fa-phone"></i> HUBUNGI SEKARANG</h4>
+                    <p><i class="fab fa-tiktok"></i> @acrnexusstor.id</p>
+                    <p><i class="fab fa-whatsapp"></i> 085781209423</p>
+                    <button class="wa-btn" onclick="window.open('https://wa.me/6285781209423?text=Halo%20saya%20mau%20order%20joki%20FF','_blank')">
+                        <i class="fab fa-whatsapp"></i> Order Joki
+                    </button>
+                    <p style="font-size:0.7rem; color:#ff6b35; margin-top:4px;">Langsung gass, slot terbatas!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== LOGO ===================== -->
+        <div id="page-logo" class="page">
+            <div class="section-title"><i class="fas fa-paint-brush"></i> <span>🎨 JASA BIKIN LOGO — BY ACR NEXUS</span></div>
+            <div class="grid" id="logoGrid"></div>
+            <div class="info-panel" style="margin-top:1rem;">
+                <div>
+                    <h4><i class="fab fa-whatsapp"></i> KONTAK</h4>
+                    <p><i class="fab fa-whatsapp"></i> 085781209423</p>
+                    <p><i class="fab fa-tiktok"></i> @acrnexusstor.id</p>
+                    <button class="wa-btn" onclick="window.open('https://wa.me/6285781209423?text=Halo%20saya%20mau%20order%20jasa%20logo','_blank')">
+                        <i class="fab fa-whatsapp"></i> Order Logo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== PRICELIST ===================== -->
+        <div id="page-pricelist" class="page">
+            <div class="pricelist-block">
+                <div class="main-title">🏎️ PRICELIST GAMEPASS &amp; CASH CDID 🏎️</div>
+                <div class="sub-title">Upgrade mobilmu sekarang di Raken Store!</div>
+
+                <div class="list-header"><i class="fas fa-tools"></i> DAFTAR GAMEPASS</div>
+                <div class="pricelist-grid" id="pricelistGamepassList"></div>
+
+                <div class="pricelist-info">
+                    <div class="info-col">
+                        <h5><i class="far fa-clock"></i> JAM OPERASIONAL</h5>
+                        <p>📅 Hari Biasa: Buka jam <strong>02:30 WIB</strong></p>
+                        <p>🎉 Hari Libur: Buka jam <strong>10:00 WIB</strong></p>
+                        <p>🔒 Tutup: Setiap jam <strong>21:00 WIB</strong></p>
+                    </div>
+                    <div class="info-col">
+                        <h5><i class="fas fa-credit-card"></i> PEMBAYARAN &amp; KONTAK</h5>
+                        <p>Metode: <strong>GoPay (Scan QRIS)</strong></p>
+                        <p>TikTok: <strong>@acrnexusstor.id</strong></p>
+                        <p>WhatsApp: <strong>085781209423</strong></p>
+                    </div>
+                </div>
+
+                <div class="btn-order-center">
+                    <button class="wa-btn" onclick="window.open('https://wa.me/6285781209423?text=Halo%20ACR%20NEXUS%20saya%20mau%20order%20produk','_blank')">
+                        <i class="fab fa-whatsapp"></i> Order Sekarang
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer>
+            <p>© 2025 ACR NEXUS — Premium Digital Store</p>
+            <div class="social-links">
+                <a href="https://www.tiktok.com/@raken.store.asli?_r=1&_t=ZS-974R8mvPLQj" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <div style="font-size:0.65rem; color:#7c8eff;">📱 @acrnexusstor.id | WA: 085781209423</div>
+        </footer>
     </div>
-    <div class="hours-badge">
-      <i class="far fa-calendar-alt"></i> <span>Operasional setiap hari — tutup 20:00 WIB</span>
-    </div>
-  </div>
 
-  <!-- GAMEPASS SECTION -->
-  <div class="section-title">
-    <i class="fas fa-gamepad"></i> <span>🎮 GAMEPASS & UPGRADE</span>
-  </div>
-  <div class="grid" id="gamepassGrid"></div>
+    <script>
+        // ===================== CANVAS DOTS =====================
+        const canvas = document.getElementById('dotCanvas');
+        let ctx = canvas.getContext('2d');
+        let dots = [];
+        const dotCount = 180;
 
-  <!-- CASH SECTION -->
-  <div class="section-title">
-    <i class="fas fa-coins"></i> <span>💰 UANG GAME (CASH)</span>
-  </div>
-  <div class="grid" id="cashGrid"></div>
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
 
-  <!-- INFO OPERASIONAL -->
-  <div class="info-panel">
-    <div class="opening-box">
-      <h4><i class="far fa-clock"></i> JAM OPERASIONAL</h4>
-      <div class="opening-details">
-        <p><span class="badge-time"><i class="fas fa-sun"></i> Senin – Jumat</span> <strong>02:30 WIB</strong> (buka pagi buta)</p>
-        <p><span class="badge-time"><i class="fas fa-umbrella-beach"></i> Hari Libur / Weekend</span> <strong>10:00 WIB</strong></p>
-        <p><span class="badge-time"><i class="fas fa-door-closed"></i> Tutup (Setiap hari)</span> <strong>20:00 WIB</strong></p>
-        <div class="warning-note">
-          <i class="fas fa-exclamation-triangle" style="color:#ffbb44;"></i> <strong>Catatan:</strong> Pembelian via store official, uang tidak bisa kembali jika gamepass gagal masuk. Tetap bijak bertransaksi.
-        </div>
-      </div>
-    </div>
-    <div class="order-box">
-      <h4><i class="fab fa-whatsapp"></i> ORDER & CS</h4>
-      <div class="order-method">
-        <p><i class="fas fa-mouse-pointer"></i> <strong>Klik produk</strong> → langsung ke WhatsApp</p>
-        <p><i class="fas fa-qrcode"></i> Metode: <strong>GoPay (Scan QRIS)</strong></p>
-        <p><i class="fas fa-bolt"></i> Proses cepat & aman</p>
-        <div style="margin-top: 12px;">
-          <span class="btn-wa-sim"><i class="fab fa-whatsapp"></i> 24/7 order via WA</span>
-        </div>
-        <p class="note-item" style="margin-top: 10px;"><i class="fas fa-store"></i> Store resmi ACR NEXUS — terpercaya.</p>
-      </div>
-    </div>
-  </div>
+        class MovingDot {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.radius = Math.random() * 2.2 + 1.0;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.color = `rgba(170, 200, 255, ${this.opacity})`;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < -20) this.x = canvas.width + 20;
+                if (this.x > canvas.width + 20) this.x = -20;
+                if (this.y < -20) this.y = canvas.height + 20;
+                if (this.y > canvas.height + 20) this.y = -20;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.shadowBlur = 3;
+                ctx.shadowColor = "rgba(100, 150, 255, 0.3)";
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
 
-  <footer>
-    <p>© 2025 ACR NEXUS — Premium Digital Store. Harga dalam Rupiah (IDR)</p>
-    <div class="social-links">
-      <a href="https://www.tiktok.com/@raken.store.asli?_r=1&_t=ZS-974R8mvPLQj" target="_blank" aria-label="TikTok Official ACR NEXUS">
-        <i class="fab fa-tiktok"></i>
-      </a>
-      <a href="#" style="opacity:0.7;"><i class="fab fa-instagram"></i></a>
-      <a href="#" style="opacity:0.7;"><i class="fab fa-twitter"></i></a>
-    </div>
-    <div style="margin-top: 8px; font-size: 0.7rem;">📱 TikTok: @raken.store.asli | #ACRNEXUS</div>
-  </footer>
-</div>
+        function initDots() {
+            dots = [];
+            for (let i = 0; i < dotCount; i++) dots.push(new MovingDot());
+        }
 
-<script>
-  // ========== EFEK BINTIK BERJALAN DENGAN CANVAS ==========
-  const canvas = document.getElementById('dotCanvas');
-  let ctx = canvas.getContext('2d');
-  let dots = [];
-  let dotCount = 200;  // jumlah bintik berjalan
+        function animateDots() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(10, 12, 26, 0.08)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            for (let dot of dots) { dot.update();
+                dot.draw(); }
+            requestAnimationFrame(animateDots);
+        }
 
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
+        resizeCanvas();
+        initDots();
+        animateDots();
+        window.addEventListener('resize', () => { resizeCanvas();
+            initDots(); });
 
-  class MovingDot {
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.radius = Math.random() * 2.2 + 1.0;  // bintik kecil
-      this.speedX = (Math.random() - 0.5) * 0.5;
-      this.speedY = (Math.random() - 0.5) * 0.5;
-      this.opacity = Math.random() * 0.5 + 0.2;
-      this.color = `rgba(170, 200, 255, ${this.opacity})`;
-    }
-    update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
-      // wrap around
-      if (this.x < -20) this.x = canvas.width + 20;
-      if (this.x > canvas.width + 20) this.x = -20;
-      if (this.y < -20) this.y = canvas.height + 20;
-      if (this.y > canvas.height + 20) this.y = -20;
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = this.color;
-      ctx.fill();
-      ctx.shadowBlur = 3;
-      ctx.shadowColor = "rgba(100, 150, 255, 0.4)";
-      ctx.fill();
-      ctx.shadowBlur = 0;
-    }
-  }
+        // ===================== NAVIGASI =====================
+        function navigateTo(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector(`.nav-btn[data-page="${page}"]`).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-  function initDots() {
-    dots = [];
-    for (let i = 0; i < dotCount; i++) {
-      dots.push(new MovingDot());
-    }
-  }
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                navigateTo(btn.dataset.page);
+            });
+        });
 
-  function animateDots() {
-    if (!ctx) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // efek trail halus
-    ctx.fillStyle = "rgba(10, 12, 26, 0.1)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    for (let dot of dots) {
-      dot.update();
-      dot.draw();
-    }
-    requestAnimationFrame(animateDots);
-  }
+        // ===================== DATA & FORMAT =====================
+        function formatRp(n) { return new Intl.NumberFormat('id-ID').format(n); }
 
-  function setupCanvas() {
-    resizeCanvas();
-    initDots();
-    animateDots();
-    window.addEventListener('resize', () => {
-      resizeCanvas();
-      initDots();
-    });
-  }
-  setupCanvas();
+        function waLink(msg) {
+            return 'https://wa.me/6285781209423?text=' + encodeURIComponent(msg);
+        }
 
-  // ========== DATA PRODUK (HARGA STORE & HARGA SPESIAL LEWAT SAYA) ==========
-  const gamepassList = [
-    { name: "Radio", storePrice: 4000, specialPrice: 6000, desc: "Akses radio kustom" },
-    { name: "Suspension", storePrice: 4000, specialPrice: 7000, desc: "Suspension tuning" },
-    { name: "Premium Accessories", storePrice: 7000, specialPrice: 12000, desc: "Aksesoris premium" },
-    { name: "Paint Pass", storePrice: 8000, specialPrice: 13000, desc: "Warna eksklusif" },
-    { name: "Exclusive Rims", storePrice: 9000, specialPrice: 14000, desc: "Velg limited" },
-    { name: "Custom Plate", storePrice: 9000, specialPrice: 14000, desc: "Plat nomor custom" },
-    { name: "Slot Expansion", storePrice: 11000, specialPrice: 16000, desc: "+ slot kendaraan" },
-    { name: "Dragspec", storePrice: 12000, specialPrice: 17000, desc: "Spec drag race" },
-    { name: "Luxury Pass", storePrice: 13000, specialPrice: 18000, desc: "Pass mewah" },
-    { name: "Police Pass", storePrice: 16000, specialPrice: 21000, desc: "Fitur kepolisian" },
-    { name: "2x Paycheck", storePrice: 55000, specialPrice: 60000, desc: "Gaji ganda permanen" }
-  ];
+        // ===== DATA PRICELIST =====
+        const pricelistGamepassData = [
+            { name: 'OWNABLE CAR', price: 15000 },
+            { name: 'LUXURY HOUSE', price: 13000 },
+            { name: 'EMERGENCY VEHICLES', price: 17000 },
+            { name: 'RETRO PASS', price: 19000 },
+            { name: 'ADVANCE MODIFICATION', price: 26000 },
+            { name: 'RARE IMPORTS', price: 21000 },
+            { name: 'LUXURY CAR', price: 27900 },
+            { name: '2X OWN CAR', price: 29900 },
+            { name: '2X PAYCHECK', price: 38900 },
+            { name: '+50% EARNING', price: 40000 }
+        ];
 
-  const cashList = [
-    { nominal: "5.000.000", storePrice: 3000, specialPrice: 5000 },
-    { nominal: "10.000.000", storePrice: 5000, specialPrice: 10000 },
-    { nominal: "50.000.000", storePrice: 8000, specialPrice: 13000 },
-    { nominal: "100.000.000", storePrice: 11000, specialPrice: 16000 },
-    { nominal: "500.000.000", storePrice: 42000, specialPrice: 47000 }
-  ];
+        // ===== DATA GAMEPASS PAGE =====
+        const gamepassStoreData = [
+            { name: 'Radio', price: 4000 },
+            { name: 'Suspension', price: 4000 },
+            { name: 'Premium Accessories', price: 7000 },
+            { name: 'Paint Pass', price: 8000 },
+            { name: 'Exclusive Rims', price: 9000 },
+            { name: 'Custom Plate', price: 9000 },
+            { name: 'Slot Expansion', price: 11000 },
+            { name: 'Dragspec', price: 12000 },
+            { name: 'Luxury Pass', price: 13000 },
+            { name: 'Police Pass', price: 16000 },
+            { name: '2x Paycheck', price: 55000 }
+        ];
 
-  function formatRupiah(angka) {
-    return new Intl.NumberFormat('id-ID').format(angka);
-  }
+        const gamepassResellerData = [
+            { name: 'Radio', price: 6000 },
+            { name: 'Suspension', price: 7000 },
+            { name: 'Premium Accessories', price: 12000 },
+            { name: 'Paint Pass', price: 13000 },
+            { name: 'Exclusive Rims', price: 14000 },
+            { name: 'Custom Plate', price: 14000 },
+            { name: 'Slot Expansion', price: 16000 },
+            { name: 'Dragspec', price: 17000 },
+            { name: 'Luxury Pass', price: 18000 },
+            { name: 'Police Pass', price: 21000 },
+            { name: '2x Paycheck', price: 60000 }
+        ];
 
-  // FUNGSI WA: menampilkan dua harga (Store & Lewat Saya)
-  function getWALink(productTitle, isGamepass, nominalRaw = null, storePrice, specialPrice) {
-    let productLine = "";
-    if (isGamepass) {
-      productLine = `🎮 GAMEPASS: ${productTitle}`;
-    } else {
-      productLine = `💰 CASH: ${nominalRaw} (${productTitle})`;
-    }
-    const storeFormatted = `Rp ${formatRupiah(storePrice)}`;
-    const specialFormatted = `Rp ${formatRupiah(specialPrice)}`;
-    const warningMsg = "⚠️ PERINGATAN: Jika membeli via Store Official, uang TIDAK BISA KEMBALI meskipun gamepass tidak masuk. Disarankan via Lewat Saya untuk keamanan ekstra.";
-    const msg = `Halo ACR NEXUS! Saya ingin order produk berikut:%0A%0A${productLine}%0A%0A🏬 Harga Store Resmi: ${storeFormatted}%0A✨ Harga Spesial (Lewat Saya): ${specialFormatted}%0A%0A${warningMsg}%0A%0ASaya pilih opsi: [Store/Spesial] %0APembayaran GoPay QRIS. Mohon panduan selanjutnya. Terima kasih!`;
-    return `https://wa.me/6285781209423?text=${msg}`;
-  }
+        const cashData = [
+            { nominal: '5.000.000', store: 3000, special: 5000 },
+            { nominal: '10.000.000', store: 5000, special: 10000 },
+            { nominal: '50.000.000', store: 8000, special: 13000 },
+            { nominal: '100.000.000', store: 11000, special: 16000 },
+            { nominal: '500.000.000', store: 42000, special: 47000 }
+        ];
 
-  // Render GAMEPASS (tampilkan dua harga)
-  const gamepassGrid = document.getElementById('gamepassGrid');
-  function renderGamepass() {
-    gamepassGrid.innerHTML = '';
-    gamepassList.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.addEventListener('click', () => {
-        const waUrl = getWALink(item.name, true, null, item.storePrice, item.specialPrice);
-        window.open(waUrl, '_blank');
-      });
-      card.innerHTML = `
-        <div class="card-header">
-          <div class="product-name">${item.name}</div>
-          <div class="badge-type"><i class="fas fa-crown"></i> Gamepass</div>
-        </div>
-        <div class="price-block">
-          <div class="price-store">
-            <i class="fas fa-store"></i> STORE: <span>Rp ${formatRupiah(item.storePrice)}</span>
-          </div>
-          <div class="price-special">
-            <i class="fas fa-user-check"></i> LEWAT SAYA (+Rp5.000): <strong>Rp ${formatRupiah(item.specialPrice)}</strong>
-          </div>
-        </div>
-        <div class="divider-light"></div>
-        <div class="note-item"><i class="fas fa-info-circle"></i> ${item.desc}</div>
-        <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik kartu → order via WhatsApp</div>
-      `;
-      gamepassGrid.appendChild(card);
-    });
-  }
+        const ffData = [
+            { qty: '30', price: 6000 }, { qty: '40', price: 8000 }, { qty: '60', price: 10000 },
+            { qty: '75', price: 11000 }, { qty: '100', price: 15000 }, { qty: '120', price: 17000 },
+            { qty: '150', price: 21000 }, { qty: '190', price: 25000 }, { qty: '200', price: 26000 },
+            { qty: '250', price: 33000 }, { qty: '280', price: 36000 }, { qty: '300', price: 40000 },
+            { qty: '350', price: 45000 }, { qty: '360', price: 46000 },
+            { qty: '1000', price: 125000 }, { qty: '1510', price: 187000 }, { qty: '1800', price: 224000 },
+            { qty: '1875', price: 233000 }, { qty: '1975', price: 246000 }, { qty: '2000', price: 250000 },
+            { qty: '2140', price: 268000 }
+        ];
 
-  // Render CASH (tampilkan dua harga)
-  const cashGrid = document.getElementById('cashGrid');
-  function renderCash() {
-    cashGrid.innerHTML = '';
-    cashList.forEach(cash => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.addEventListener('click', () => {
-        const waLink = getWALink(`${cash.nominal} Cash`, false, cash.nominal, cash.storePrice, cash.specialPrice);
-        window.open(waLink, '_blank');
-      });
-      card.innerHTML = `
-        <div class="card-header">
-          <div class="product-name">💰 ${cash.nominal}</div>
-          <div class="badge-type"><i class="fas fa-dollar-sign"></i> Cash</div>
-        </div>
-        <div class="price-block">
-          <div class="price-store">
-            <i class="fas fa-store"></i> STORE: <span>Rp ${formatRupiah(cash.storePrice)}</span>
-          </div>
-          <div class="price-special">
-            <i class="fas fa-hand-holding-usd"></i> LEWAT SAYA (+Rp5.000): <strong>Rp ${formatRupiah(cash.specialPrice)}</strong>
-          </div>
-        </div>
-        <div class="divider-light"></div>
-        <div class="note-item"><i class="fas fa-coins"></i> Top up saldo game instan</div>
-        <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik kartu → langsung order</div>
-      `;
-      cashGrid.appendChild(card);
-    });
-  }
+        const mlData = [
+            { qty: '86', price: 25500 }, { qty: '172', price: 48000 }, { qty: '257', price: 70000 },
+            { qty: '344', price: 91000 }, { qty: '429', price: 112000 }, { qty: '514', price: 135000 },
+            { qty: '600', price: 154000 }, { qty: '706', price: 179000 }, { qty: '876', price: 223000 },
+            { qty: '1146', price: 363000 }, { qty: '2159', price: 513500 }, { qty: '3073', price: 733000 },
+            { qty: 'Paket Spesial', price: 28000 }
+        ];
 
-  renderGamepass();
-  renderCash();
-</script>
+        const brData = [
+            { from: 'Gold 1', price: 90000 }, { from: 'Gold 2', price: 80000 }, { from: 'Gold 3', price: 70000 },
+            { from: 'Gold 4', price: 60000 }, { from: 'Plat 1', price: 50000 }, { from: 'Plat 2', price: 45000 },
+            { from: 'Plat 3', price: 40000 }, { from: 'Plat 4', price: 35000 }, { from: 'DM 1', price: 25000 },
+            { from: 'DM 2', price: 20000 }, { from: 'DM 3', price: 15000 }, { from: 'DM 4', price: 10000 }
+        ];
+
+        const csData = [
+            { tier: 'Gold', price: 1000 }, { tier: 'Platinum', price: 1000 },
+            { tier: 'Diamond', price: 'PERBINTANG' }, { tier: 'Heroic', price: 1500 },
+            { tier: 'Master', price: 1500 }
+        ];
+
+        const logoData = [
+            { name: 'LOGO', tanpa: 7000, ubah: 12000 },
+            { name: 'LOGO FT', tanpa: 9000, ubah: 13000 },
+            { name: 'DESAIN QRIS', tanpa: 6000, ubah: 11000 },
+            { name: 'BANNER WELCOME', tanpa: 5000, ubah: 8000 },
+            { name: 'DESAIN ROASTER TEAM', tanpa: 4000, ubah: '-' }
+        ];
+
+        // ===================== RENDER =====================
+        function renderPricelistGamepass() {
+            const g = document.getElementById('pricelistGamepassList');
+            if (g) {
+                g.innerHTML = '';
+                pricelistGamepassData.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'item';
+                    div.innerHTML = `<span class="name">${item.name}</span> <span class="price">Rp ${formatRp(item.price)}</span>`;
+                    div.onclick = () => window.open(waLink(
+                        `Halo ACR NEXUS! Saya mau order GAMEPASS: ${item.name} (Rp ${formatRp(item.price)})`),
+                        '_blank');
+                    g.appendChild(div);
+                });
+            }
+        }
+
+        function renderGamepassStore() {
+            const g = document.getElementById('gamepassGrid');
+            g.innerHTML = '';
+            gamepassStoreData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => window.open(waLink(
+                    `Halo ACR NEXUS! Saya mau order GAMEPASS STORE: ${item.name} (Rp ${formatRp(item.price)})`),
+                    '_blank');
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="product-name">${item.name}</span>
+                        <span class="badge-type">Store</span>
+                    </div>
+                    <div class="price-block">
+                        <div class="price-store"><i class="fas fa-store"></i> Rp <span>${formatRp(item.price)}</span></div>
+                    </div>
+                    <div class="divider-light"></div>
+                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
+                `;
+                g.appendChild(card);
+            });
+        }
+
+        function renderGamepassReseller() {
+            const g = document.getElementById('gamepassResellerGrid');
+            g.innerHTML = '';
+            gamepassResellerData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => window.open(waLink(
+                    `Halo ACR NEXUS! Saya mau order GAMEPASS LEWAT SAYA: ${item.name} (Rp ${formatRp(item.price)})`),
+                    '_blank');
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="product-name">${item.name}</span>
+                        <span class="badge-type">Lewat Saya</span>
+                    </div>
+                    <div class="price-block">
+                        <div class="price-special"><i class="fas fa-user-check"></i> Rp <strong>${formatRp(item.price)}</strong></div>
+                    </div>
+                    <div class="divider-light"></div>
+                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
+                `;
+                g.appendChild(card);
+            });
+        }
+
+        function renderCash() {
+            const g = document.getElementById('cashGrid');
+            g.innerHTML = '';
+            cashData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => window.open(waLink(
+                    `Halo ACR NEXUS! Saya mau order CASH: ${item.nominal}\n🏬 Store: Rp ${formatRp(item.store)}\n✨ Lewat Saya: Rp ${formatRp(item.special)}`
+                    ), '_blank');
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="product-name">💰 ${item.nominal}</span>
+                        <span class="badge-type">Cash</span>
+                    </div>
+                    <div class="price-block">
+                        <div class="price-store"><i class="fas fa-store"></i> STORE: <span>Rp ${formatRp(item.store)}</span></div>
+                        <div class="price-special"><i class="fas fa-user-check"></i> LEWAT SAYA: <strong>Rp ${formatRp(item.special)}</strong></div>
+                    </div>
+                    <div class="divider-light"></div>
+                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
+                `;
+                g.appendChild(card);
+            });
+        }
+
+        function renderFF() {
+            const g = document.getElementById('ffGrid');
+            g.innerHTML = '';
+            ffData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => window.open(waLink(
+                    `Halo ACR NEXUS! Saya mau order DIAMOND FF: ${item.qty} Diamond (Rp ${formatRp(item.price)})`
+                    ), '_blank');
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="product-name">🔥 ${item.qty} 💎</span>
+                        <span class="badge-type">FF</span>
+                    </div>
+                    <div class="price-block">
+                        <div class="price-special"><i class="fas fa-tag"></i> Rp <strong>${formatRp(item.price)}</strong></div>
+                    </div>
+                    <div class="divider-light"></div>
+                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
+                `;
+                g.appendChild(card);
+            });
+        }
+
+        function renderML() {
+            const g = document.getElementById('mlGrid');
+            g.innerHTML = '';
+            mlData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => window.open(waLink(
+                    `Halo ACR NEXUS! Saya mau order DIAMOND ML: ${item.qty} Diamond (Rp ${formatRp(item.price)})`
+                    ), '_blank');
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="product-name">💎 ${item.qty}</span>
+                        <span class="badge-type">ML</span>
+                    </div>
+                    <div class="price-block">
+                        <div class="price-special"><i class="fas fa-tag"></i> Rp <strong>${formatRp(item.price)}</strong></div>
+                    </div>
+                    <div class="divider-light"></div>
+                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
+                `;
+                g.appendChild(card);
+            });
+        }
+
+        function renderBR() {
+            const g = document.getElementById('brList');
+            g.innerHTML = '';
+            brData.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.innerHTML =
+                    `<span>${item.from}</span> <span>Rp ${formatRp(item.price)}</span>`;
+                div.onclick = () => window.open(waLink(
+                    `Halo ACR NEXUS! Saya mau order JOKI BR: ${item.from} ➔ Heroic (Rp ${formatRp(item.price)})`
+                    ), '_blank');
+                g.appendChild(div);
+            });
+        }
+
+        function renderCS() {
+            const g = document.getElementById('csList');
+            g.innerHTML = '';
+            csData.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                const priceText = typeof item.price === 'string' ? item.price : `Rp ${formatRp(item.price)}`;
+                div.innerHTML = `<span>${item.tier}</span> <span>${priceText}</span>`;
+                if (typeof item.price === 'number') {
+                    div.onclick = () => window.open(waLink(
+                        `Halo ACR NEXUS! Saya mau order JOKI CS: ${item.tier} (Rp ${formatRp(item.price)}/bintang)`
+                        ), '_blank');
+                }
+                g.appendChild(div);
+            });
+        }
+
+        function renderLogo() {
+            const g = document.getElementById('logoGrid');
+            g.innerHTML = '';
+            logoData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                const ubahText = item.ubah === '-' ? '-' : `Rp ${formatRp(item.ubah)}`;
+                card.onclick = () => window.open(waLink(
+                    `Halo ACR NEXUS! Saya mau order JASA LOGO: ${item.name}\nTanpa ubah karakter: Rp ${formatRp(item.tanpa)}\nUbah karakter: ${ubahText}`
+                    ), '_blank');
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="product-name">🎨 ${item.name}</span>
+                        <span class="badge-type">Logo</span>
+                    </div>
+                    <div class="price-block">
+                        <div class="price-store"><i class="fas fa-check"></i> Tanpa ubah: <span>Rp ${formatRp(item.tanpa)}</span></div>
+                        <div class="price-special"><i class="fas fa-pen"></i> Ubah karakter: <strong>${ubahText}</strong></div>
+                    </div>
+                    <div class="divider-light"></div>
+                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
+                `;
+                g.appendChild(card);
+            });
+        }
+
+        // ===================== JALANKAN SEMUA RENDER =====================
+        renderPricelistGamepass();
+        renderGamepassStore();
+        renderGamepassReseller();
+        renderCash();
+        renderFF();
+        renderML();
+        renderBR();
+        renderCS();
+        renderLogo();
+    </script>
 </body>
 </html>
