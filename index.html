@@ -97,7 +97,7 @@
             background: rgba(30, 40, 80, 0.5);
             border: 1px solid rgba(80, 100, 255, 0.3);
             color: #c6d0ff;
-            padding: 6px 14px;
+            padding: 4px 10px;
             border-radius: 30px;
             font-size: 0.75rem;
             font-weight: 600;
@@ -105,6 +105,22 @@
             transition: 0.3s;
             backdrop-filter: blur(4px);
             font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-btn img {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .nav-btn .nav-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #c6d0ff;
         }
 
         .nav-btn:hover,
@@ -113,6 +129,11 @@
             border-color: #7c8eff;
             color: #fff;
             box-shadow: 0 0 20px rgba(60, 80, 255, 0.2);
+        }
+
+        .nav-btn:hover .nav-label,
+        .nav-btn.active .nav-label {
+            color: #fff;
         }
 
         .page {
@@ -254,6 +275,99 @@
         }
 
         .wa-hint {
+            background: #1f2546cc;
+            border-radius: 30px;
+            padding: 4px 10px;
+            font-size: 0.65rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ===== CARD DENGAN GAMBAR UNTUK FF, CASH & ML ===== */
+        .card-with-img {
+            background: rgba(18, 22, 42, 0.55);
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            border: 1px solid rgba(80, 100, 255, 0.3);
+            transition: 0.3s;
+            cursor: pointer;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .card-with-img:hover {
+            transform: translateY(-4px);
+            border-color: #7c8eff;
+            background: rgba(30, 36, 65, 0.75);
+        }
+
+        .card-with-img img {
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border: 2px solid rgba(80, 100, 255, 0.2);
+            transition: 0.3s;
+        }
+
+        .card-with-img:hover img {
+            border-color: #7c8eff;
+            transform: scale(1.02);
+        }
+
+        .card-with-img .product-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .card-with-img .badge-type {
+            font-size: 0.6rem;
+            background: #262e54cc;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+
+        .card-with-img .price-special {
+            font-size: 0.85rem;
+            background: linear-gradient(95deg, #1f264ccc, #131834cc);
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-left: 3px solid #ffe484;
+            width: fit-content;
+        }
+
+        .card-with-img .price-special strong {
+            color: #ffe484;
+        }
+
+        .card-with-img .divider-light {
+            height: 1px;
+            background: #3a4270;
+            margin: 8px 0;
+            width: 100%;
+        }
+
+        .card-with-img .note-item {
+            font-size: 0.68rem;
+            color: #c6d0ff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 4px 0;
+        }
+
+        .card-with-img .wa-hint {
             background: #1f2546cc;
             border-radius: 30px;
             padding: 4px 10px;
@@ -483,26 +597,50 @@
             font-weight: 600;
         }
 
-        /* ===== KATEGORI CEPAT ===== */
+        /* ===== QUICK CATEGORY ===== */
         .quick-category {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1rem;
+            gap: 1.2rem;
             margin: 1.5rem 0;
         }
 
         .quick-category .card {
             text-align: center;
-            padding: 1rem;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 130px;
+        }
+
+        .quick-category .card img {
+            width: 70px;
+            height: 70px;
+            border-radius: 14px;
+            object-fit: cover;
+            margin: 0 auto 10px auto;
+            display: block;
+            border: 2px solid rgba(80, 100, 255, 0.2);
+            transition: 0.3s;
+        }
+
+        .quick-category .card:hover img {
+            border-color: #7c8eff;
+            transform: scale(1.08);
+            box-shadow: 0 0 25px rgba(60, 80, 255, 0.3);
         }
 
         .quick-category .card i {
-            font-size: 1.8rem;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
         }
 
         .quick-category .card h3 {
-            margin-top: 4px;
             font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 0;
         }
 
         /* Joki list */
@@ -574,7 +712,14 @@
             }
             .nav-btn {
                 font-size: 0.65rem;
-                padding: 4px 10px;
+                padding: 3px 8px;
+            }
+            .nav-btn img {
+                width: 22px;
+                height: 22px;
+            }
+            .nav-btn .nav-label {
+                font-size: 0.55rem;
             }
             .grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -597,11 +742,38 @@
             .quick-category {
                 grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             }
+            .quick-category .card img {
+                width: 55px;
+                height: 55px;
+            }
+            .quick-category .card {
+                min-height: 110px;
+                padding: 1rem 0.6rem;
+            }
+            .card-with-img img {
+                max-width: 140px;
+            }
         }
 
         @media (max-width: 480px) {
             .pricelist-grid {
                 grid-template-columns: 1fr;
+            }
+            .quick-category {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            .quick-category .card img {
+                width: 45px;
+                height: 45px;
+            }
+            .quick-category .card i {
+                font-size: 2rem;
+            }
+            .quick-category .card h3 {
+                font-size: 0.7rem;
+            }
+            .card-with-img img {
+                max-width: 120px;
             }
         }
     </style>
@@ -620,14 +792,37 @@
                 <p>gamepass & digital currency • instant delivery</p>
             </div>
             <div class="nav-menu">
-                <button class="nav-btn active" data-page="home">🏠 Home</button>
-                <button class="nav-btn" data-page="gamepass">🎮 Gamepass</button>
-                <button class="nav-btn" data-page="cash">💰 Cash</button>
-                <button class="nav-btn" data-page="freefire">🔥 FF</button>
-                <button class="nav-btn" data-page="ml">💎 ML</button>
-                <button class="nav-btn" data-page="joki">🎯 Joki</button>
-                <button class="nav-btn" data-page="logo">🎨 Logo</button>
-                <button class="nav-btn" data-page="pricelist">🏷️ Pricelist</button>
+                <button class="nav-btn active" data-page="home">
+                    🏠 <span class="nav-label">Home</span>
+                </button>
+                <button class="nav-btn" data-page="gamepass">
+                    <img src="https://files.catbox.moe/o502l0.jpg" alt="Gamepass">
+                    <span class="nav-label">Gamepass</span>
+                </button>
+                <button class="nav-btn" data-page="cash">
+                    <i class="fas fa-coins" style="color:#ffd700; font-size:1.1rem;"></i>
+                    <span class="nav-label">Cash</span>
+                </button>
+                <button class="nav-btn" data-page="freefire">
+                    <img src="https://files.catbox.moe/wnsru2.jpg" alt="FF">
+                    <span class="nav-label">FF</span>
+                </button>
+                <button class="nav-btn" data-page="ml">
+                    <img src="https://files.catbox.moe/attagc.jpg" alt="ML">
+                    <span class="nav-label">ML</span>
+                </button>
+                <button class="nav-btn" data-page="joki">
+                    <img src="https://files.catbox.moe/nklpcj.jpg" alt="Joki">
+                    <span class="nav-label">Joki</span>
+                </button>
+                <button class="nav-btn" data-page="logo">
+                    <i class="fas fa-paint-brush" style="color:#ff6b9d; font-size:1.1rem;"></i>
+                    <span class="nav-label">Logo</span>
+                </button>
+                <button class="nav-btn" data-page="pricelist">
+                    <img src="https://files.catbox.moe/fbd323.jpg" alt="Pricelist">
+                    <span class="nav-label">Pricelist</span>
+                </button>
             </div>
         </div>
 
@@ -650,23 +845,23 @@
 
             <div class="quick-category">
                 <div class="card" onclick="navigateTo('gamepass')">
-                    <i class="fas fa-gamepad" style="color:#7c8eff;"></i>
+                    <img src="https://files.catbox.moe/o502l0.jpg" alt="Gamepass">
                     <h3>🎮 Gamepass</h3>
                 </div>
                 <div class="card" onclick="navigateTo('cash')">
-                    <i class="fas fa-coins" style="color:#ffd966;"></i>
+                    <i class="fas fa-coins" style="color:#ffd700;"></i>
                     <h3>💰 Cash</h3>
                 </div>
                 <div class="card" onclick="navigateTo('freefire')">
-                    <i class="fas fa-fire" style="color:#ff6b35;"></i>
+                    <img src="https://files.catbox.moe/wnsru2.jpg" alt="Free Fire">
                     <h3>🔥 Free Fire</h3>
                 </div>
                 <div class="card" onclick="navigateTo('ml')">
-                    <i class="fas fa-diamond" style="color:#00b4d8;"></i>
+                    <img src="https://files.catbox.moe/attagc.jpg" alt="Mobile Legends">
                     <h3>💎 ML</h3>
                 </div>
                 <div class="card" onclick="navigateTo('joki')">
-                    <i class="fas fa-trophy" style="color:#ffd700;"></i>
+                    <img src="https://files.catbox.moe/nklpcj.jpg" alt="Joki">
                     <h3>🎯 Joki</h3>
                 </div>
                 <div class="card" onclick="navigateTo('logo')">
@@ -674,7 +869,7 @@
                     <h3>🎨 Logo</h3>
                 </div>
                 <div class="card" onclick="navigateTo('pricelist')">
-                    <i class="fas fa-tags" style="color:#ffaa00;"></i>
+                    <img src="https://files.catbox.moe/fbd323.jpg" alt="Pricelist">
                     <h3>🏷️ Pricelist</h3>
                 </div>
             </div>
@@ -705,6 +900,7 @@
         <!-- ===================== CASH ===================== -->
         <div id="page-cash" class="page">
             <div class="section-title"><i class="fas fa-coins"></i> <span>💰 UANG GAME (CASH)</span></div>
+            <p style="font-size:0.85rem; color:#99a4dd; margin-bottom:1rem;">Harga Normal / Store</p>
             <div class="grid" id="cashGrid"></div>
             <div class="info-panel">
                 <div>
@@ -724,7 +920,7 @@
         <!-- ===================== FREEFIRE ===================== -->
         <div id="page-freefire" class="page">
             <div class="section-title"><i class="fas fa-fire"></i> <span>🔥 DIAMOND FREEFIRE</span></div>
-            <p style="font-size:0.85rem; color:#99a4dd; margin-bottom:1rem;">Upgrade BANDEL sekarang di ACR NEXUS!</p>
+            <p style="font-size:0.85rem; color:#99a4dd; margin-bottom:1rem;">💎 DAFTAR HARGA DIAMONDS</p>
             <div class="grid" id="ffGrid"></div>
             <div class="info-panel">
                 <div>
@@ -982,43 +1178,77 @@
             { name: '2x Paycheck', price: 60000 }
         ];
 
+        // ===== DATA CASH DENGAN GAMBAR =====
         const cashData = [
-            { nominal: '5.000.000', store: 3000, special: 5000 },
-            { nominal: '10.000.000', store: 5000, special: 10000 },
-            { nominal: '50.000.000', store: 8000, special: 13000 },
-            { nominal: '100.000.000', store: 11000, special: 16000 },
-            { nominal: '500.000.000', store: 42000, special: 47000 }
+            { nominal: '5.000.000', store: 3000, special: 5000, img: 'https://files.catbox.moe/pycgnv.jpg' },
+            { nominal: '10.000.000', store: 5000, special: 10000, img: 'https://files.catbox.moe/fb33o4.jpg' },
+            { nominal: '50.000.000', store: 8000, special: 13000, img: 'https://files.catbox.moe/ob074q.jpg' },
+            { nominal: '100.000.000', store: 11000, special: 16000, img: 'https://files.catbox.moe/2jwe14.jpg' },
+            { nominal: '500.000.000', store: 42000, special: 47000, img: 'https://files.catbox.moe/kwhio1.jpg' }
         ];
 
+        // ===== DATA FF DENGAN GAMBAR =====
         const ffData = [
-            { qty: '30', price: 6000 }, { qty: '40', price: 8000 }, { qty: '60', price: 10000 },
-            { qty: '75', price: 11000 }, { qty: '100', price: 15000 }, { qty: '120', price: 17000 },
-            { qty: '150', price: 21000 }, { qty: '190', price: 25000 }, { qty: '200', price: 26000 },
-            { qty: '250', price: 33000 }, { qty: '280', price: 36000 }, { qty: '300', price: 40000 },
-            { qty: '350', price: 45000 }, { qty: '360', price: 46000 },
-            { qty: '1000', price: 125000 }, { qty: '1510', price: 187000 }, { qty: '1800', price: 224000 },
-            { qty: '1875', price: 233000 }, { qty: '1975', price: 246000 }, { qty: '2000', price: 250000 },
-            { qty: '2140', price: 268000 }
+            { qty: '30', price: 6000, img: 'https://files.catbox.moe/8ku4bh.jpg' },
+            { qty: '40', price: 8000, img: 'https://files.catbox.moe/m8dh7t.jpg' },
+            { qty: '60', price: 10000, img: 'https://files.catbox.moe/wzy1y9.jpg' },
+            { qty: '75', price: 11000, img: 'https://files.catbox.moe/if30vw.jpg' },
+            { qty: '100', price: 15000, img: 'https://files.catbox.moe/lr1nkw.jpg' },
+            { qty: '120', price: 17000, img: 'https://files.catbox.moe/n8st9p.jpg' },
+            { qty: '150', price: 21000, img: 'https://files.catbox.moe/3424oz.jpg' },
+            { qty: '190', price: 25000, img: 'https://files.catbox.moe/jpyvld.jpg' },
+            { qty: '200', price: 26000, img: 'https://files.catbox.moe/7mmq1n.jpg' },
+            { qty: '250', price: 33000, img: 'https://files.catbox.moe/q19bdj.jpg' },
+            { qty: '280', price: 36000, img: 'https://files.catbox.moe/u3rj6d.jpg' },
+            { qty: '300', price: 40000, img: 'https://files.catbox.moe/7z1htv.jpg' },
+            { qty: '350', price: 45000, img: 'https://files.catbox.moe/fyisyu.jpg' },
+            { qty: '360', price: 46000, img: 'https://files.catbox.moe/4n8pby.jpg' },
+            { qty: '1000', price: 125000, img: 'https://files.catbox.moe/hm10p9.jpg' },
+            { qty: '1510', price: 187000, img: 'https://files.catbox.moe/vhrmzo.jpg' },
+            { qty: '1800', price: 224000, img: 'https://files.catbox.moe/ghiujc.jpg' },
+            { qty: '1875', price: 233000, img: 'https://files.catbox.moe/f41rf9.jpg' },
+            { qty: '1975', price: 246000, img: 'https://files.catbox.moe/njhw3z.jpg' },
+            { qty: '2000', price: 250000, img: 'https://files.catbox.moe/1bf6mo.jpg' },
+            { qty: '2140', price: 268000, img: 'https://files.catbox.moe/yt4c8e.jpg' }
         ];
 
+        // ===== DATA ML DENGAN GAMBAR =====
         const mlData = [
-            { qty: '86', price: 25500 }, { qty: '172', price: 48000 }, { qty: '257', price: 70000 },
-            { qty: '344', price: 91000 }, { qty: '429', price: 112000 }, { qty: '514', price: 135000 },
-            { qty: '600', price: 154000 }, { qty: '706', price: 179000 }, { qty: '876', price: 223000 },
-            { qty: '1146', price: 363000 }, { qty: '2159', price: 513500 }, { qty: '3073', price: 733000 },
-            { qty: 'Paket Spesial', price: 28000 }
+            { qty: '86', price: 25500, img: 'https://files.catbox.moe/4cmwdc.jpg' },
+            { qty: '172', price: 48000, img: 'https://files.catbox.moe/qdgnr6.jpg' },
+            { qty: '257', price: 70000, img: 'https://files.catbox.moe/uqd8o1.jpg' },
+            { qty: '344', price: 91000, img: 'https://files.catbox.moe/gyxvxt.jpg' },
+            { qty: '429', price: 112000, img: 'https://files.catbox.moe/y45y5x.jpg' },
+            { qty: '514', price: 135000, img: 'https://files.catbox.moe/491rwn.jpg' },
+            { qty: '600', price: 154000, img: 'https://files.catbox.moe/osfmxi.jpg' },
+            { qty: '706', price: 179000, img: 'https://files.catbox.moe/arhci1.jpg' },
+            { qty: '876', price: 223000, img: 'https://files.catbox.moe/l8ln8s.jpg' },
+            { qty: '1146', price: 363000, img: 'https://files.catbox.moe/bwh1t9.jpg' },
+            { qty: '2159', price: 513500, img: 'https://files.catbox.moe/yj0jnr.jpg' },
+            { qty: '3073', price: 733000, img: 'https://files.catbox.moe/g2s1tm.jpg' },
+            { qty: 'Paket Spesial', price: 28000, img: 'https://files.catbox.moe/z7fsyj.jpg' }
         ];
 
         const brData = [
-            { from: 'Gold 1', price: 90000 }, { from: 'Gold 2', price: 80000 }, { from: 'Gold 3', price: 70000 },
-            { from: 'Gold 4', price: 60000 }, { from: 'Plat 1', price: 50000 }, { from: 'Plat 2', price: 45000 },
-            { from: 'Plat 3', price: 40000 }, { from: 'Plat 4', price: 35000 }, { from: 'DM 1', price: 25000 },
-            { from: 'DM 2', price: 20000 }, { from: 'DM 3', price: 15000 }, { from: 'DM 4', price: 10000 }
+            { from: 'Gold 1', price: 90000 },
+            { from: 'Gold 2', price: 80000 },
+            { from: 'Gold 3', price: 70000 },
+            { from: 'Gold 4', price: 60000 },
+            { from: 'Plat 1', price: 50000 },
+            { from: 'Plat 2', price: 45000 },
+            { from: 'Plat 3', price: 40000 },
+            { from: 'Plat 4', price: 35000 },
+            { from: 'DM 1', price: 25000 },
+            { from: 'DM 2', price: 20000 },
+            { from: 'DM 3', price: 15000 },
+            { from: 'DM 4', price: 10000 }
         ];
 
         const csData = [
-            { tier: 'Gold', price: 1000 }, { tier: 'Platinum', price: 1000 },
-            { tier: 'Diamond', price: 'PERBINTANG' }, { tier: 'Heroic', price: 1500 },
+            { tier: 'Gold', price: 1000 },
+            { tier: 'Platinum', price: 1000 },
+            { tier: 'Diamond', price: 'PERBINTANG' },
+            { tier: 'Heroic', price: 1500 },
             { tier: 'Master', price: 1500 }
         ];
 
@@ -1100,21 +1330,24 @@
             g.innerHTML = '';
             cashData.forEach(item => {
                 const card = document.createElement('div');
-                card.className = 'card';
+                card.className = 'card-with-img';
                 card.onclick = () => window.open(waLink(
                     `Halo ACR NEXUS! Saya mau order CASH: ${item.nominal}\n🏬 Store: Rp ${formatRp(item.store)}\n✨ Lewat Saya: Rp ${formatRp(item.special)}`
-                    ), '_blank');
+                ), '_blank');
                 card.innerHTML = `
-                    <div class="card-header">
-                        <span class="product-name">💰 ${item.nominal}</span>
-                        <span class="badge-type">Cash</span>
+                    <img src="${item.img}" alt="${item.nominal} Cash">
+                    <div style="width:100%;">
+                        <div class="card-header" style="justify-content:center;">
+                            <span class="product-name">💰 ${item.nominal}</span>
+                            <span class="badge-type">Cash</span>
+                        </div>
+                        <div class="price-block" style="align-items:center;">
+                            <div class="price-store"><i class="fas fa-store"></i> STORE: <span>Rp ${formatRp(item.store)}</span></div>
+                            <div class="price-special"><i class="fas fa-user-check"></i> LEWAT SAYA: <strong>Rp ${formatRp(item.special)}</strong></div>
+                        </div>
+                        <div class="divider-light"></div>
+                        <div class="note-item wa-hint" style="justify-content:center;"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
                     </div>
-                    <div class="price-block">
-                        <div class="price-store"><i class="fas fa-store"></i> STORE: <span>Rp ${formatRp(item.store)}</span></div>
-                        <div class="price-special"><i class="fas fa-user-check"></i> LEWAT SAYA: <strong>Rp ${formatRp(item.special)}</strong></div>
-                    </div>
-                    <div class="divider-light"></div>
-                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
                 `;
                 g.appendChild(card);
             });
@@ -1125,20 +1358,22 @@
             g.innerHTML = '';
             ffData.forEach(item => {
                 const card = document.createElement('div');
-                card.className = 'card';
+                card.className = 'card-with-img';
                 card.onclick = () => window.open(waLink(
                     `Halo ACR NEXUS! Saya mau order DIAMOND FF: ${item.qty} Diamond (Rp ${formatRp(item.price)})`
-                    ), '_blank');
+                ), '_blank');
                 card.innerHTML = `
-                    <div class="card-header">
-                        <span class="product-name">🔥 ${item.qty} 💎</span>
-                        <span class="badge-type">FF</span>
+                    <img src="${item.img}" alt="${item.qty} Diamonds">
+                    <div style="width:100%;">
+                        <div class="card-header" style="justify-content:center;">
+                            <span class="product-name">🔥 ${item.qty} 💎</span>
+                        </div>
+                        <div class="price-block" style="align-items:center;">
+                            <div class="price-special"><i class="fas fa-tag"></i> Rp <strong>${formatRp(item.price)}</strong></div>
+                        </div>
+                        <div class="divider-light"></div>
+                        <div class="note-item wa-hint" style="justify-content:center;"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
                     </div>
-                    <div class="price-block">
-                        <div class="price-special"><i class="fas fa-tag"></i> Rp <strong>${formatRp(item.price)}</strong></div>
-                    </div>
-                    <div class="divider-light"></div>
-                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
                 `;
                 g.appendChild(card);
             });
@@ -1149,20 +1384,23 @@
             g.innerHTML = '';
             mlData.forEach(item => {
                 const card = document.createElement('div');
-                card.className = 'card';
+                card.className = 'card-with-img';
                 card.onclick = () => window.open(waLink(
                     `Halo ACR NEXUS! Saya mau order DIAMOND ML: ${item.qty} Diamond (Rp ${formatRp(item.price)})`
-                    ), '_blank');
+                ), '_blank');
                 card.innerHTML = `
-                    <div class="card-header">
-                        <span class="product-name">💎 ${item.qty}</span>
-                        <span class="badge-type">ML</span>
+                    <img src="${item.img}" alt="${item.qty} ML Diamonds">
+                    <div style="width:100%;">
+                        <div class="card-header" style="justify-content:center;">
+                            <span class="product-name">💎 ${item.qty}</span>
+                            <span class="badge-type">ML</span>
+                        </div>
+                        <div class="price-block" style="align-items:center;">
+                            <div class="price-special"><i class="fas fa-tag"></i> Rp <strong>${formatRp(item.price)}</strong></div>
+                        </div>
+                        <div class="divider-light"></div>
+                        <div class="note-item wa-hint" style="justify-content:center;"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
                     </div>
-                    <div class="price-block">
-                        <div class="price-special"><i class="fas fa-tag"></i> Rp <strong>${formatRp(item.price)}</strong></div>
-                    </div>
-                    <div class="divider-light"></div>
-                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
                 `;
                 g.appendChild(card);
             });
@@ -1178,7 +1416,7 @@
                     `<span>${item.from}</span> <span>Rp ${formatRp(item.price)}</span>`;
                 div.onclick = () => window.open(waLink(
                     `Halo ACR NEXUS! Saya mau order JOKI BR: ${item.from} ➔ Heroic (Rp ${formatRp(item.price)})`
-                    ), '_blank');
+                ), '_blank');
                 g.appendChild(div);
             });
         }
@@ -1194,7 +1432,7 @@
                 if (typeof item.price === 'number') {
                     div.onclick = () => window.open(waLink(
                         `Halo ACR NEXUS! Saya mau order JOKI CS: ${item.tier} (Rp ${formatRp(item.price)}/bintang)`
-                        ), '_blank');
+                    ), '_blank');
                 }
                 g.appendChild(div);
             });
@@ -1209,7 +1447,7 @@
                 const ubahText = item.ubah === '-' ? '-' : `Rp ${formatRp(item.ubah)}`;
                 card.onclick = () => window.open(waLink(
                     `Halo ACR NEXUS! Saya mau order JASA LOGO: ${item.name}\nTanpa ubah karakter: Rp ${formatRp(item.tanpa)}\nUbah karakter: ${ubahText}`
-                    ), '_blank');
+                ), '_blank');
                 card.innerHTML = `
                     <div class="card-header">
                         <span class="product-name">🎨 ${item.name}</span>
