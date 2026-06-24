@@ -349,6 +349,30 @@
             font-weight: 600;
         }
 
+        .card-with-img .price-block {
+            margin: 0.6rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .card-with-img .price-store {
+            font-size: 0.8rem;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            width: fit-content;
+        }
+
+        .card-with-img .price-store span {
+            font-weight: 700;
+            color: #fff;
+        }
+
         .card-with-img .price-special {
             font-size: 0.85rem;
             background: linear-gradient(95deg, #1f264ccc, #131834cc);
@@ -721,6 +745,132 @@
             transform: scale(1.1);
         }
 
+        /* ===== MODAL POPUP ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: rgba(18, 22, 42, 0.95);
+            border-radius: 2rem;
+            padding: 2rem;
+            max-width: 420px;
+            width: 90%;
+            border: 1px solid rgba(80, 100, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-box .modal-title {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+
+        .modal-box .modal-subtitle {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #99a4dd;
+            margin-bottom: 1.2rem;
+        }
+
+        .modal-box .modal-product {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 16px;
+            border-radius: 12px;
+            margin-bottom: 1.2rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #ffd700;
+        }
+
+        .modal-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .modal-options .opt-btn {
+            padding: 12px 16px;
+            border-radius: 14px;
+            border: 2px solid rgba(80, 100, 255, 0.2);
+            background: rgba(0, 0, 0, 0.2);
+            color: #edf2ff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .modal-options .opt-btn:hover {
+            border-color: #7c8eff;
+            background: rgba(30, 36, 65, 0.5);
+            transform: scale(1.02);
+        }
+
+        .modal-options .opt-btn .price-tag {
+            font-weight: 700;
+        }
+
+        .modal-options .opt-btn.store-opt .price-tag {
+            color: #88aaff;
+        }
+
+        .modal-options .opt-btn.special-opt .price-tag {
+            color: #ffe484;
+        }
+
+        .modal-close {
+            display: block;
+            margin: 1rem auto 0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #99a4dd;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 0.8rem;
@@ -787,6 +937,10 @@
             }
             .card-with-img img {
                 max-width: 140px;
+            }
+            .modal-box {
+                padding: 1.5rem;
+                margin: 0 1rem;
             }
         }
 
@@ -921,10 +1075,8 @@
         <!-- ===================== GAMEPASS (GAMEPAS DDS) ===================== -->
         <div id="page-gamepass" class="page">
             <div class="section-title"><i class="fas fa-gamepad"></i> <span>🎮 GAMEPAS DDS</span></div>
-            <p style="margin-bottom:0.5rem; font-size:0.8rem; color:#99a4dd;">Beli Langsung di Store / Resmi</p>
+            <p style="margin-bottom:0.5rem; font-size:0.8rem; color:#99a4dd;">Pilih metode pembelian favoritmu</p>
             <div class="grid" id="gamepassGrid"></div>
-            <p style="margin:0.5rem 0 0.2rem 0; font-size:0.8rem; color:#ffd700;">Beli Lewat Saya (Ada tambahan Rp 5.000 PER ITEM)</p>
-            <div class="grid" id="gamepassResellerGrid"></div>
             <div class="info-panel">
                 <div>
                     <h4><i class="far fa-clock"></i> JAM OPERASIONAL</h4>
@@ -1102,6 +1254,26 @@
 
     </div>
 
+    <!-- ===================== MODAL POPUP ===================== -->
+    <div class="modal-overlay" id="priceModal">
+        <div class="modal-box">
+            <div class="modal-title">💎 Pilih Metode Pembelian</div>
+            <div class="modal-subtitle">Silakan pilih harga yang ingin digunakan</div>
+            <div class="modal-product" id="modalProductName">-</div>
+            <div class="modal-options">
+                <button class="opt-btn store-opt" onclick="confirmOrder('store')">
+                    🏬 Store Resmi
+                    <span class="price-tag" id="modalStorePrice">-</span>
+                </button>
+                <button class="opt-btn special-opt" onclick="confirmOrder('special')">
+                    ✨ Lewat Saya
+                    <span class="price-tag" id="modalSpecialPrice">-</span>
+                </button>
+            </div>
+            <button class="modal-close" onclick="closeModal()">❌ Batal</button>
+        </div>
+    </div>
+
     <script>
         // ===================== CANVAS DOTS =====================
         const canvas = document.getElementById('dotCanvas');
@@ -1180,12 +1352,41 @@
             });
         });
 
+        // ===================== MODAL =====================
+        let modalData = {};
+
+        function openModal(productName, storePrice, specialPrice, waMessageStore, waMessageSpecial) {
+            modalData = {
+                productName: productName,
+                storePrice: storePrice,
+                specialPrice: specialPrice,
+                waMessageStore: waMessageStore,
+                waMessageSpecial: waMessageSpecial
+            };
+
+            document.getElementById('modalProductName').textContent = productName;
+            document.getElementById('modalStorePrice').textContent = storePrice;
+            document.getElementById('modalSpecialPrice').textContent = specialPrice;
+            document.getElementById('priceModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('priceModal').classList.remove('active');
+        }
+
+        function confirmOrder(type) {
+            const waMsg = type === 'store' ? modalData.waMessageStore : modalData.waMessageSpecial;
+            window.open('https://wa.me/6285781209423?text=' + encodeURIComponent(waMsg), '_blank');
+            closeModal();
+        }
+
+        // Tutup modal klik di luar
+        document.getElementById('priceModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
         // ===================== DATA & FORMAT =====================
         function formatRp(n) { return new Intl.NumberFormat('id-ID').format(n); }
-
-        function waLink(msg) {
-            return 'https://wa.me/6285781209423?text=' + encodeURIComponent(msg);
-        }
 
         // ===== DATA PRICELIST =====
         const pricelistGamepassData = [
@@ -1201,33 +1402,19 @@
             { name: '+50% EARNING', price: 40000 }
         ];
 
-        // ===== DATA GAMEPASS PAGE =====
-        const gamepassStoreData = [
-            { name: 'Radio', price: 4000 },
-            { name: 'Suspension', price: 4000 },
-            { name: 'Premium Accessories', price: 7000 },
-            { name: 'Paint Pass', price: 8000 },
-            { name: 'Exclusive Rims', price: 9000 },
-            { name: 'Custom Plate', price: 9000 },
-            { name: 'Slot Expansion', price: 11000 },
-            { name: 'Dragspec', price: 12000 },
-            { name: 'Luxury Pass', price: 13000 },
-            { name: 'Police Pass', price: 16000 },
-            { name: '2x Paycheck', price: 55000 }
-        ];
-
-        const gamepassResellerData = [
-            { name: 'Radio', price: 6000 },
-            { name: 'Suspension', price: 7000 },
-            { name: 'Premium Accessories', price: 12000 },
-            { name: 'Paint Pass', price: 13000 },
-            { name: 'Exclusive Rims', price: 14000 },
-            { name: 'Custom Plate', price: 14000 },
-            { name: 'Slot Expansion', price: 16000 },
-            { name: 'Dragspec', price: 17000 },
-            { name: 'Luxury Pass', price: 18000 },
-            { name: 'Police Pass', price: 21000 },
-            { name: '2x Paycheck', price: 60000 }
+        // ===== DATA GAMEPASS PAGE (digabung jadi satu list dengan 2 harga) =====
+        const gamepassData = [
+            { name: 'Radio', storePrice: 4000, specialPrice: 6000 },
+            { name: 'Suspension', storePrice: 4000, specialPrice: 7000 },
+            { name: 'Premium Accessories', storePrice: 7000, specialPrice: 12000 },
+            { name: 'Paint Pass', storePrice: 8000, specialPrice: 13000 },
+            { name: 'Exclusive Rims', storePrice: 9000, specialPrice: 14000 },
+            { name: 'Custom Plate', storePrice: 9000, specialPrice: 14000 },
+            { name: 'Slot Expansion', storePrice: 11000, specialPrice: 16000 },
+            { name: 'Dragspec', storePrice: 12000, specialPrice: 17000 },
+            { name: 'Luxury Pass', storePrice: 13000, specialPrice: 18000 },
+            { name: 'Police Pass', storePrice: 16000, specialPrice: 21000 },
+            { name: '2x Paycheck', storePrice: 55000, specialPrice: 60000 }
         ];
 
         // ===== DATA CASH DENGAN GAMBAR =====
@@ -1312,7 +1499,7 @@
             { name: 'DESAIN ROASTER TEAM', tanpa: 4000, ubah: '-' }
         ];
 
-        // ===================== RENDER =====================
+        // ===================== RENDER FUNCTIONS =====================
         function renderPricelistGamepass() {
             const g = document.getElementById('pricelistGamepassList');
             if (g) {
@@ -1321,57 +1508,40 @@
                     const div = document.createElement('div');
                     div.className = 'item';
                     div.innerHTML = `<span class="name">${item.name}</span> <span class="price">Rp ${formatRp(item.price)}</span>`;
-                    div.onclick = () => window.open(waLink(
-                        `Halo ACR NEXUS! Saya mau order GAMEPASS: ${item.name} (Rp ${formatRp(item.price)})`),
-                        '_blank');
+                    div.onclick = () => {
+                        const msg = `Halo ACR NEXUS! Saya mau order GAMEPASS: ${item.name} (Rp ${formatRp(item.price)})`;
+                        window.open('https://wa.me/6285781209423?text=' + encodeURIComponent(msg), '_blank');
+                    };
                     g.appendChild(div);
                 });
             }
         }
 
-        function renderGamepassStore() {
+        function renderGamepass() {
             const g = document.getElementById('gamepassGrid');
             g.innerHTML = '';
-            gamepassStoreData.forEach(item => {
+            gamepassData.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
-                card.onclick = () => window.open(waLink(
-                    `Halo ACR NEXUS! Saya mau order GAMEPASS STORE: ${item.name} (Rp ${formatRp(item.price)})`),
-                    '_blank');
+                card.onclick = () => {
+                    const productName = item.name;
+                    const storePrice = `Rp ${formatRp(item.storePrice)}`;
+                    const specialPrice = `Rp ${formatRp(item.specialPrice)}`;
+                    const waStore = `Halo ACR NEXUS! Saya mau order GAMEPASS STORE: ${item.name} (${storePrice})`;
+                    const waSpecial = `Halo ACR NEXUS! Saya mau order GAMEPASS LEWAT SAYA: ${item.name} (${specialPrice})`;
+                    openModal(productName, storePrice, specialPrice, waStore, waSpecial);
+                };
                 card.innerHTML = `
                     <div class="card-header">
                         <span class="product-name">${item.name}</span>
-                        <span class="badge-type">Store</span>
+                        <span class="badge-type">Gamepass</span>
                     </div>
                     <div class="price-block">
-                        <div class="price-store"><i class="fas fa-store"></i> Rp <span>${formatRp(item.price)}</span></div>
+                        <div class="price-store"><i class="fas fa-store"></i> STORE: <span>Rp ${formatRp(item.storePrice)}</span></div>
+                        <div class="price-special"><i class="fas fa-user-check"></i> LEWAT SAYA: <strong>Rp ${formatRp(item.specialPrice)}</strong></div>
                     </div>
                     <div class="divider-light"></div>
-                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
-                `;
-                g.appendChild(card);
-            });
-        }
-
-        function renderGamepassReseller() {
-            const g = document.getElementById('gamepassResellerGrid');
-            g.innerHTML = '';
-            gamepassResellerData.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.onclick = () => window.open(waLink(
-                    `Halo ACR NEXUS! Saya mau order GAMEPASS LEWAT SAYA: ${item.name} (Rp ${formatRp(item.price)})`),
-                    '_blank');
-                card.innerHTML = `
-                    <div class="card-header">
-                        <span class="product-name">${item.name}</span>
-                        <span class="badge-type">Lewat Saya</span>
-                    </div>
-                    <div class="price-block">
-                        <div class="price-special"><i class="fas fa-user-check"></i> Rp <strong>${formatRp(item.price)}</strong></div>
-                    </div>
-                    <div class="divider-light"></div>
-                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
+                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → pilih harga</div>
                 `;
                 g.appendChild(card);
             });
@@ -1383,9 +1553,14 @@
             cashData.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card-with-img';
-                card.onclick = () => window.open(waLink(
-                    `Halo ACR NEXUS! Saya mau order CASH: ${item.nominal}\n🏬 Store: Rp ${formatRp(item.store)}\n✨ Lewat Saya: Rp ${formatRp(item.special)}`
-                ), '_blank');
+                card.onclick = () => {
+                    const productName = `Cash ${item.nominal}`;
+                    const storePrice = `Rp ${formatRp(item.store)}`;
+                    const specialPrice = `Rp ${formatRp(item.special)}`;
+                    const waStore = `Halo ACR NEXUS! Saya mau order CASH STORE: ${item.nominal} (${storePrice})`;
+                    const waSpecial = `Halo ACR NEXUS! Saya mau order CASH LEWAT SAYA: ${item.nominal} (${specialPrice})`;
+                    openModal(productName, storePrice, specialPrice, waStore, waSpecial);
+                };
                 card.innerHTML = `
                     <img src="${item.img}" alt="${item.nominal} Cash">
                     <div style="width:100%;">
@@ -1393,12 +1568,12 @@
                             <span class="product-name">💰 ${item.nominal}</span>
                             <span class="badge-type">Cash</span>
                         </div>
-                        <div class="price-block" style="align-items:center;">
+                        <div class="price-block">
                             <div class="price-store"><i class="fas fa-store"></i> STORE: <span>Rp ${formatRp(item.store)}</span></div>
                             <div class="price-special"><i class="fas fa-user-check"></i> LEWAT SAYA: <strong>Rp ${formatRp(item.special)}</strong></div>
                         </div>
                         <div class="divider-light"></div>
-                        <div class="note-item wa-hint" style="justify-content:center;"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
+                        <div class="note-item wa-hint" style="justify-content:center;"><i class="fab fa-whatsapp"></i> Klik → pilih harga</div>
                     </div>
                 `;
                 g.appendChild(card);
@@ -1411,20 +1586,25 @@
             ffData.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card-with-img';
-                card.onclick = () => window.open(waLink(
-                    `Halo ACR NEXUS! Saya mau order DIAMOND FF: ${item.qty} Diamond (Rp ${formatRp(item.price)})`
-                ), '_blank');
+                card.onclick = () => {
+                    const productName = `FF ${item.qty} Diamond`;
+                    const storePrice = `Rp ${formatRp(item.price)}`;
+                    const specialPrice = `Rp ${formatRp(item.price + 5000)}`;
+                    const waStore = `Halo ACR NEXUS! Saya mau order DIAMOND FF STORE: ${item.qty} Diamond (${storePrice})`;
+                    const waSpecial = `Halo ACR NEXUS! Saya mau order DIAMOND FF LEWAT SAYA: ${item.qty} Diamond (${specialPrice})`;
+                    openModal(productName, storePrice, specialPrice, waStore, waSpecial);
+                };
                 card.innerHTML = `
                     <img src="${item.img}" alt="${item.qty} Diamonds">
                     <div style="width:100%;">
                         <div class="card-header" style="justify-content:center;">
                             <span class="product-name">🔥 ${item.qty} 💎</span>
                         </div>
-                        <div class="price-block" style="align-items:center;">
+                        <div class="price-block">
                             <div class="price-special"><i class="fas fa-tag"></i> Rp <strong>${formatRp(item.price)}</strong></div>
                         </div>
                         <div class="divider-light"></div>
-                        <div class="note-item wa-hint" style="justify-content:center;"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
+                        <div class="note-item wa-hint" style="justify-content:center;"><i class="fab fa-whatsapp"></i> Klik → pilih harga</div>
                     </div>
                 `;
                 g.appendChild(card);
@@ -1437,9 +1617,14 @@
             mlData.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card-with-img';
-                card.onclick = () => window.open(waLink(
-                    `Halo ACR NEXUS! Saya mau order DIAMOND ML: ${item.qty} Diamond (Rp ${formatRp(item.price)})`
-                ), '_blank');
+                card.onclick = () => {
+                    const productName = `ML ${item.qty} Diamond`;
+                    const storePrice = `Rp ${formatRp(item.price)}`;
+                    const specialPrice = `Rp ${formatRp(item.price + 5000)}`;
+                    const waStore = `Halo ACR NEXUS! Saya mau order DIAMOND ML STORE: ${item.qty} Diamond (${storePrice})`;
+                    const waSpecial = `Halo ACR NEXUS! Saya mau order DIAMOND ML LEWAT SAYA: ${item.qty} Diamond (${specialPrice})`;
+                    openModal(productName, storePrice, specialPrice, waStore, waSpecial);
+                };
                 card.innerHTML = `
                     <img src="${item.img}" alt="${item.qty} ML Diamonds">
                     <div style="width:100%;">
@@ -1447,11 +1632,11 @@
                             <span class="product-name">💎 ${item.qty}</span>
                             <span class="badge-type">ML</span>
                         </div>
-                        <div class="price-block" style="align-items:center;">
+                        <div class="price-block">
                             <div class="price-special"><i class="fas fa-tag"></i> Rp <strong>${formatRp(item.price)}</strong></div>
                         </div>
                         <div class="divider-light"></div>
-                        <div class="note-item wa-hint" style="justify-content:center;"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
+                        <div class="note-item wa-hint" style="justify-content:center;"><i class="fab fa-whatsapp"></i> Klik → pilih harga</div>
                     </div>
                 `;
                 g.appendChild(card);
@@ -1466,9 +1651,10 @@
                 div.className = 'item';
                 div.innerHTML =
                     `<span>${item.from}</span> <span>Rp ${formatRp(item.price)}</span>`;
-                div.onclick = () => window.open(waLink(
-                    `Halo ACR NEXUS! Saya mau order JOKI BR: ${item.from} ➔ Heroic (Rp ${formatRp(item.price)})`
-                ), '_blank');
+                div.onclick = () => {
+                    const msg = `Halo ACR NEXUS! Saya mau order JOKI BR: ${item.from} ➔ Heroic (Rp ${formatRp(item.price)})`;
+                    window.open('https://wa.me/6285781209423?text=' + encodeURIComponent(msg), '_blank');
+                };
                 g.appendChild(div);
             });
         }
@@ -1482,9 +1668,10 @@
                 const priceText = typeof item.price === 'string' ? item.price : `Rp ${formatRp(item.price)}`;
                 div.innerHTML = `<span>${item.tier}</span> <span>${priceText}</span>`;
                 if (typeof item.price === 'number') {
-                    div.onclick = () => window.open(waLink(
-                        `Halo ACR NEXUS! Saya mau order JOKI CS: ${item.tier} (Rp ${formatRp(item.price)}/bintang)`
-                    ), '_blank');
+                    div.onclick = () => {
+                        const msg = `Halo ACR NEXUS! Saya mau order JOKI CS: ${item.tier} (Rp ${formatRp(item.price)}/bintang)`;
+                        window.open('https://wa.me/6285781209423?text=' + encodeURIComponent(msg), '_blank');
+                    };
                 }
                 g.appendChild(div);
             });
@@ -1497,9 +1684,14 @@
                 const card = document.createElement('div');
                 card.className = 'card';
                 const ubahText = item.ubah === '-' ? '-' : `Rp ${formatRp(item.ubah)}`;
-                card.onclick = () => window.open(waLink(
-                    `Halo ACR NEXUS! Saya mau order JASA LOGO: ${item.name}\nTanpa ubah karakter: Rp ${formatRp(item.tanpa)}\nUbah karakter: ${ubahText}`
-                ), '_blank');
+                card.onclick = () => {
+                    const productName = `Jasa Logo: ${item.name}`;
+                    const storePrice = `Rp ${formatRp(item.tanpa)}`;
+                    const specialPrice = item.ubah === '-' ? '-' : `Rp ${formatRp(item.ubah)}`;
+                    const waStore = `Halo ACR NEXUS! Saya mau order JASA LOGO: ${item.name}\nTanpa ubah karakter: Rp ${formatRp(item.tanpa)}`;
+                    const waSpecial = `Halo ACR NEXUS! Saya mau order JASA LOGO: ${item.name}\nUbah karakter: ${ubahText}`;
+                    openModal(productName, storePrice, specialPrice, waStore, waSpecial);
+                };
                 card.innerHTML = `
                     <div class="card-header">
                         <span class="product-name">🎨 ${item.name}</span>
@@ -1510,7 +1702,7 @@
                         <div class="price-special"><i class="fas fa-pen"></i> Ubah karakter: <strong>${ubahText}</strong></div>
                     </div>
                     <div class="divider-light"></div>
-                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → order WA</div>
+                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → pilih harga</div>
                 `;
                 g.appendChild(card);
             });
@@ -1518,8 +1710,7 @@
 
         // ===================== JALANKAN SEMUA RENDER =====================
         renderPricelistGamepass();
-        renderGamepassStore();
-        renderGamepassReseller();
+        renderGamepass();
         renderCash();
         renderFF();
         renderML();
