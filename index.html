@@ -3,1298 +3,418 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ACR NEXUS | Store Digital</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#0a0c1a">
+    <title>ACR NEXUS | Loading...</title>
+    
+    <!-- Open Graph untuk preview share -->
+    <meta property="og:title" content="ACR NEXUS | Digital Store">
+    <meta property="og:description" content="Gamepass • Cash • Diamond FF & ML • Joki • Logo">
+    <meta property="og:image" content="https://files.catbox.moe/91ei5z.jpg">
+    <meta property="og:type" content="website">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Inter', sans-serif;
-            color: #edf2ff;
             background: #0a0c1a;
+            color: #edf2ff;
             min-height: 100vh;
-            padding: 1.2rem;
-            position: relative;
-        }
-
-        .moving-dots {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at 30% 40%, #0f1230, #020617);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
+            position: relative;
+            padding: 1rem;
         }
-
+        
+        /* ===== BACKGROUND ANIMASI ===== */
+        .bg-gradient {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 40%, #1a0f3d, #0a0c1a 70%);
+            z-index: -3;
+        }
+        
         #dotCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed;
+            inset: 0;
+            z-index: -2;
             display: block;
         }
-
+        
         .gradient-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at 50% 40%, rgba(10, 20, 50, 0.4), rgba(2, 6, 23, 0.7));
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 40%, rgba(140,80,255,.15), rgba(2,6,23,.8));
             z-index: -1;
             pointer-events: none;
         }
-
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            background: rgba(12, 16, 28, 0.5);
-            backdrop-filter: blur(14px);
-            padding: 0.8rem 1.8rem;
-            border-radius: 3rem;
-            border: 1px solid rgba(90, 110, 255, 0.3);
-            margin-bottom: 1.5rem;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo img {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            object-fit: cover;
-            border: 2px solid rgba(80, 100, 255, 0.3);
-        }
-
-        .logo h1 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(130deg, #FFFFFF, #8f9eff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .logo p {
-            font-size: 0.65rem;
-            color: #b9c4ff;
-        }
-
-        .nav-menu {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .nav-btn {
-            background: rgba(30, 40, 80, 0.5);
-            border: 1px solid rgba(80, 100, 255, 0.3);
-            color: #c6d0ff;
-            padding: 4px 10px;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            backdrop-filter: blur(4px);
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .nav-btn img {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            object-fit: cover;
-        }
-
-        .nav-btn .nav-label {
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: #c6d0ff;
-        }
-
-        .nav-btn:hover,
-        .nav-btn.active {
-            background: rgba(60, 80, 200, 0.5);
-            border-color: #7c8eff;
-            color: #fff;
-            box-shadow: 0 0 20px rgba(60, 80, 255, 0.2);
-        }
-
-        .nav-btn:hover .nav-label,
-        .nav-btn.active .nav-label {
-            color: #fff;
-        }
-
-        .page {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 1.5rem 0 1rem 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(0, 0, 0, 0.2);
-            padding-right: 1.2rem;
-            border-radius: 40px;
-            width: fit-content;
-        }
-
-        .section-title i {
-            background: #1a1f38;
-            padding: 8px 12px;
-            border-radius: 20px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .card {
-            background: rgba(18, 22, 42, 0.55);
-            backdrop-filter: blur(12px);
-            border-radius: 1.5rem;
-            padding: 1.2rem;
-            border: 1px solid rgba(80, 100, 255, 0.3);
-            transition: 0.3s;
-            cursor: pointer;
-            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.4);
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: #7c8eff;
-            background: rgba(30, 36, 65, 0.75);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-
-        .badge-type {
-            font-size: 0.6rem;
-            background: #262e54cc;
-            padding: 2px 10px;
-            border-radius: 30px;
-            font-weight: 600;
-        }
-
-        .price-block {
-            margin: 0.6rem 0;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .price-store {
-            font-size: 0.8rem;
-            background: rgba(0, 0, 0, 0.25);
-            padding: 4px 10px;
-            border-radius: 20px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            width: fit-content;
-        }
-
-        .price-store span {
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .price-special {
-            font-size: 0.85rem;
-            background: linear-gradient(95deg, #1f264ccc, #131834cc);
-            padding: 4px 10px;
-            border-radius: 20px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            border-left: 3px solid #ffe484;
-            width: fit-content;
-        }
-
-        .price-special strong {
-            color: #ffe484;
-        }
-
-        .divider-light {
-            height: 1px;
-            background: #3a4270;
-            margin: 8px 0;
-        }
-
-        .note-item {
-            font-size: 0.68rem;
-            color: #c6d0ff;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin: 4px 0;
-        }
-
-        .wa-hint {
-            background: #1f2546cc;
-            border-radius: 30px;
-            padding: 4px 10px;
-            font-size: 0.65rem;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* ===== CARD DENGAN GAMBAR UNTUK FF, CASH & ML ===== */
-        .card-with-img {
-            background: rgba(18, 22, 42, 0.55);
-            backdrop-filter: blur(12px);
-            border-radius: 1.5rem;
-            padding: 1.2rem;
-            border: 1px solid rgba(80, 100, 255, 0.3);
-            transition: 0.3s;
-            cursor: pointer;
-            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.4);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        
+        /* ===== PORTAL CONTAINER ===== */
+        .portal {
             text-align: center;
-        }
-
-        .card-with-img:hover {
-            transform: translateY(-4px);
-            border-color: #7c8eff;
-            background: rgba(30, 36, 65, 0.75);
-        }
-
-        .card-with-img img {
+            max-width: 500px;
             width: 100%;
-            max-width: 180px;
-            height: auto;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            border: 2px solid rgba(80, 100, 255, 0.2);
-            transition: 0.3s;
-        }
-
-        .card-with-img:hover img {
-            border-color: #7c8eff;
-            transform: scale(1.02);
-        }
-
-        .card-with-img .product-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-
-        .card-with-img .badge-type {
-            font-size: 0.6rem;
-            background: #262e54cc;
-            padding: 2px 10px;
-            border-radius: 30px;
-            font-weight: 600;
-        }
-
-        .card-with-img .price-block {
-            margin: 0.6rem 0;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            align-items: center;
-        }
-
-        .card-with-img .price-store {
-            font-size: 0.8rem;
-            background: rgba(0, 0, 0, 0.25);
-            padding: 4px 10px;
-            border-radius: 20px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            width: fit-content;
-        }
-
-        .card-with-img .price-store span {
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .card-with-img .price-special {
-            font-size: 0.85rem;
-            background: linear-gradient(95deg, #1f264ccc, #131834cc);
-            padding: 4px 10px;
-            border-radius: 20px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            border-left: 3px solid #ffe484;
-            width: fit-content;
-        }
-
-        .card-with-img .price-special strong {
-            color: #ffe484;
-        }
-
-        .card-with-img .divider-light {
-            height: 1px;
-            background: #3a4270;
-            margin: 8px 0;
-            width: 100%;
-        }
-
-        .card-with-img .note-item {
-            font-size: 0.68rem;
-            color: #c6d0ff;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin: 4px 0;
-        }
-
-        .card-with-img .wa-hint {
-            background: #1f2546cc;
-            border-radius: 30px;
-            padding: 4px 10px;
-            font-size: 0.65rem;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .info-panel {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 1rem;
-            background: rgba(10, 14, 30, 0.6);
-            backdrop-filter: blur(16px);
-            border-radius: 1.5rem;
-            padding: 1.2rem 1.8rem;
-            margin: 1.5rem 0;
-            border: 1px solid #2d345b;
-        }
-
-        .info-panel h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-left: 3px solid #7c8eff;
-            padding-left: 10px;
-            margin-bottom: 6px;
-        }
-
-        .info-panel p {
-            font-size: 0.8rem;
-            margin: 4px 0;
-        }
-
-        .badge-time {
-            background: #1e254acc;
-            padding: 2px 8px;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-
-        .warning-note {
-            background: #1a1730cc;
-            padding: 6px 10px;
-            border-radius: 14px;
-            font-size: 0.7rem;
-            border-left: 2px solid #ffaa44;
-            margin-top: 6px;
-        }
-
-        /* ===== PRICELIST BLOCK MODERN ===== */
-        .pricelist-block {
-            background: rgba(18, 22, 42, 0.6);
-            backdrop-filter: blur(14px);
+            padding: 2.5rem 2rem;
+            background: rgba(18, 22, 42, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(140, 80, 255, 0.4);
             border-radius: 2rem;
-            padding: 1.8rem;
-            border: 1px solid rgba(80, 100, 255, 0.2);
-            margin: 1.2rem 0;
-            box-shadow: 0 20px 40px -16px rgba(0, 0, 0, 0.5);
+            box-shadow: 
+                0 0 60px rgba(180, 80, 255, 0.3),
+                0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: portalIn 0.8s ease;
+            position: relative;
+            overflow: hidden;
         }
-
-        .pricelist-block .main-title {
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffd700, #ffaa00);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 4px;
+        
+        .portal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(140,80,255,.1), transparent 60%);
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
         }
-
-        .pricelist-block .sub-title {
-            text-align: center;
-            color: #99a4dd;
-            font-size: 0.9rem;
-            margin-bottom: 1.2rem;
+        
+        @keyframes portalIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
-
-        .pricelist-block .list-header {
-            color: #b7c4ff;
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin: 16px 0 10px 0;
-            padding-left: 4px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
-
-        .pricelist-block .list-header i {
-            color: #ffd700;
-        }
-
-        .pricelist-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 8px;
-        }
-
-        .pricelist-grid .item {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 8px 14px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.82rem;
-            cursor: pointer;
-            transition: 0.25s;
-            border: 1px solid rgba(80, 100, 255, 0.08);
-        }
-
-        .pricelist-grid .item:hover {
-            background: rgba(30, 36, 65, 0.6);
-            border-color: #7c8eff;
-            transform: translateX(3px);
-        }
-
-        .pricelist-grid .item .name {
-            color: #c6d0ff;
-        }
-
-        .pricelist-grid .item .price {
-            color: #ffe484;
-            font-weight: 700;
-        }
-
-        .pricelist-info {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 1.2rem;
-            margin-top: 1.2rem;
-            padding-top: 1.2rem;
-            border-top: 1px solid #3a4270;
-        }
-
-        .pricelist-info .info-col {
-            flex: 1;
-            min-width: 150px;
-        }
-
-        .pricelist-info .info-col h5 {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: #b7c4ff;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .pricelist-info .info-col p {
-            font-size: 0.75rem;
-            color: #99a4dd;
-            margin: 2px 0;
-        }
-
-        .pricelist-info .info-col p strong {
-            color: #edf2ff;
-        }
-
-        .btn-order-center {
-            text-align: center;
-            margin-top: 1.2rem;
-        }
-
-        .wa-btn {
-            background: #25D366;
-            color: #0a0c12;
-            padding: 8px 24px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            border: none;
-            cursor: pointer;
-            transition: 0.25s;
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
-        }
-
-        .wa-btn:hover {
-            transform: scale(1.04);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-        }
-
-        /* ===== WELCOME SECTION ===== */
-        .welcome-section {
-            background: rgba(18, 22, 42, 0.3);
-            backdrop-filter: blur(8px);
-            border-radius: 1.5rem;
-            padding: 1.5rem 2rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(80, 100, 255, 0.12);
-            text-align: center;
-        }
-
-        .welcome-section .logo-store {
-            width: 80px;
-            height: 80px;
-            border-radius: 16px;
+        
+        /* ===== LOGO ===== */
+        .logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(80, 100, 255, 0.3);
-            margin-bottom: 12px;
+            border: 3px solid #c026d3;
+            box-shadow: 
+                0 0 30px rgba(200, 80, 255, 0.6),
+                0 0 60px rgba(200, 80, 255, 0.3);
+            margin-bottom: 1.2rem;
+            animation: pulseLogo 2s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #7c3aed, #c026d3);
         }
-
-        .welcome-section h2 {
-            font-size: 1.8rem;
+        
+        @keyframes pulseLogo {
+            0%, 100% { 
+                transform: scale(1); 
+                box-shadow: 0 0 30px rgba(200, 80, 255, 0.6), 0 0 60px rgba(200, 80, 255, 0.3);
+            }
+            50% { 
+                transform: scale(1.05); 
+                box-shadow: 0 0 40px rgba(200, 80, 255, 0.9), 0 0 80px rgba(200, 80, 255, 0.5);
+            }
+        }
+        
+        /* ===== TITLE ===== */
+        .title {
+            font-size: 2rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, #8f9eff);
+            background: linear-gradient(135deg, #fff, #c48fff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
         }
-
-        .welcome-section p {
-            color: #99a4dd;
-            font-size: 0.9rem;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
+        
+        .subtitle {
+            font-size: 0.85rem;
+            color: #c4a8ff;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
         }
-
-        .welcome-section .highlight {
-            color: #ffd700;
-            font-weight: 600;
-        }
-
-        /* ===== QUICK CATEGORY ===== */
-        .quick-category {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1.2rem;
-            margin: 1.5rem 0;
-        }
-
-        .quick-category .card {
-            text-align: center;
-            padding: 1.5rem 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 130px;
-        }
-
-        .quick-category .card img {
+        
+        /* ===== LOADING SPINNER ===== */
+        .spinner-wrapper {
+            position: relative;
             width: 70px;
             height: 70px;
-            border-radius: 14px;
-            object-fit: cover;
-            margin: 0 auto 10px auto;
-            display: block;
-            border: 2px solid rgba(80, 100, 255, 0.2);
-            transition: 0.3s;
+            margin: 0 auto 1.5rem;
+            z-index: 1;
         }
-
-        .quick-category .card:hover img {
-            border-color: #7c8eff;
-            transform: scale(1.08);
-            box-shadow: 0 0 25px rgba(60, 80, 255, 0.3);
+        
+        .spinner {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 4px solid rgba(140, 80, 255, 0.2);
+            border-top-color: #c026d3;
+            border-right-color: #7c3aed;
+            animation: spin 1s linear infinite;
         }
-
-        .quick-category .card i {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
+        
+        .spinner-inner {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-bottom-color: #ffe484;
+            border-left-color: #c48fff;
+            animation: spin 1.5s linear infinite reverse;
         }
-
-        .quick-category .card h3 {
-            font-size: 0.9rem;
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* ===== LOADING TEXT ===== */
+        .loading-text {
+            font-size: 0.95rem;
+            color: #e0d0ff;
             font-weight: 600;
-            margin-top: 0;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
         }
-
-        /* Joki list */
-        .joki-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 6px;
+        
+        .loading-text::after {
+            content: '';
+            animation: dots 1.5s steps(4, end) infinite;
         }
-
-        .joki-list .item {
-            background: rgba(18, 22, 42, 0.4);
-            padding: 4px 10px;
-            border-radius: 10px;
+        
+        @keyframes dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+        
+        /* ===== PROGRESS BAR ===== */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 0.8rem;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(140, 80, 255, 0.3);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #7c3aed, #c026d3, #ffe484);
+            background-size: 200% 100%;
+            border-radius: 20px;
+            transition: width 0.3s ease;
+            animation: shimmer 2s linear infinite;
+            box-shadow: 0 0 15px rgba(200, 80, 255, 0.8);
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+        
+        .progress-percent {
             font-size: 0.75rem;
-            display: flex;
-            justify-content: space-between;
-            border: 1px solid rgba(80, 100, 255, 0.1);
-            cursor: pointer;
-        }
-
-        .joki-list .item:hover {
-            background: rgba(30, 36, 65, 0.6);
-        }
-
-        .joki-list .item span {
             color: #ffe484;
             font-weight: 700;
+            font-family: monospace;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
         }
-
-        /* ===== FOOTER ===== */
-        footer {
-            margin-top: 2rem;
-            text-align: center;
-            border-top: 1px solid #3a4270;
+        
+        /* ===== INFO ===== */
+        .info {
+            margin-top: 1.5rem;
             padding-top: 1.2rem;
-            font-size: 0.75rem;
-            color: #bdc6ff;
+            border-top: 1px solid rgba(140, 80, 255, 0.2);
+            position: relative;
+            z-index: 1;
         }
-
+        
+        .info p {
+            font-size: 0.75rem;
+            color: #8b95c9;
+            margin-bottom: 0.5rem;
+        }
+        
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 0.6rem 0;
+            gap: 15px;
+            margin-top: 0.8rem;
         }
-
+        
         .social-links a {
-            color: #cdd6ff;
-            font-size: 1.5rem;
-            transition: 0.2s;
+            color: #c4a8ff;
+            font-size: 1.3rem;
+            transition: 0.3s;
+            text-decoration: none;
         }
-
+        
         .social-links a:hover {
             color: #fff;
-            transform: scale(1.1);
+            transform: scale(1.2);
+            text-shadow: 0 0 20px rgba(200, 80, 255, 0.8);
         }
-
-        /* ===== MODAL POPUP ===== */
-        .modal-overlay {
+        
+        /* ===== MAINTENANCE MODE ===== */
+        .maintenance-box {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            z-index: 999;
-            justify-content: center;
-            align-items: center;
         }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-box {
-            background: rgba(18, 22, 42, 0.95);
-            border-radius: 2rem;
-            padding: 2rem;
-            max-width: 420px;
-            width: 90%;
-            border: 1px solid rgba(80, 100, 255, 0.3);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            animation: modalIn 0.3s ease;
-        }
-
-        @keyframes modalIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.9) translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .modal-box .modal-title {
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: #ffffff;
-        }
-
-        .modal-box .modal-subtitle {
-            text-align: center;
-            font-size: 0.8rem;
-            color: #99a4dd;
-            margin-bottom: 1.2rem;
-        }
-
-        .modal-box .modal-product {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 10px 16px;
-            border-radius: 12px;
-            margin-bottom: 1.2rem;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1rem;
-            color: #ffd700;
-        }
-
-        .modal-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .modal-options .opt-btn {
-            padding: 12px 16px;
-            border-radius: 14px;
-            border: 2px solid rgba(80, 100, 255, 0.2);
-            background: rgba(0, 0, 0, 0.2);
-            color: #edf2ff;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .modal-options .opt-btn:hover {
-            border-color: #7c8eff;
-            background: rgba(30, 36, 65, 0.5);
-            transform: scale(1.02);
-        }
-
-        .modal-options .opt-btn .price-tag {
-            font-weight: 700;
-        }
-
-        .modal-options .opt-btn.store-opt .price-tag {
-            color: #88aaff;
-        }
-
-        .modal-options .opt-btn.special-opt .price-tag {
-            color: #ffe484;
-        }
-
-        .modal-close {
+        
+        .maintenance-box.active {
             display: block;
-            margin: 1rem auto 0;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #99a4dd;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .loading-box.hidden {
+            display: none;
+        }
+        
+        .maintenance-icon {
+            font-size: 5rem;
+            color: #fbbf24;
+            margin-bottom: 1rem;
+            animation: wrench 2s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(251, 191, 36, 0.8);
+        }
+        
+        @keyframes wrench {
+            0%, 100% { transform: rotate(-15deg); }
+            50% { transform: rotate(15deg); }
+        }
+        
+        .maintenance-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+        }
+        
+        .maintenance-message {
+            font-size: 0.9rem;
+            color: #e0d0ff;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .maintenance-eta {
+            display: inline-block;
             padding: 8px 20px;
-            border-radius: 30px;
+            background: rgba(251, 191, 36, 0.15);
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            border-radius: 20px;
             font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            color: #fbbf24;
+            margin-top: 0.5rem;
         }
-
-        .modal-close:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 0.8rem;
-            }
-            .header {
-                flex-direction: column;
-                align-items: start;
-                gap: 8px;
-                padding: 0.8rem 1.2rem;
-            }
-            .logo img {
-                width: 40px;
-                height: 40px;
-            }
-            .logo h1 {
-                font-size: 1.4rem;
-            }
-            .nav-menu {
-                gap: 4px;
-            }
-            .nav-btn {
-                font-size: 0.65rem;
-                padding: 3px 8px;
-            }
-            .nav-btn img {
-                width: 22px;
-                height: 22px;
-            }
-            .nav-btn .nav-label {
-                font-size: 0.55rem;
-            }
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            }
-            .info-panel {
-                flex-direction: column;
-            }
-            .section-title {
-                font-size: 1.2rem;
-            }
-            .pricelist-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .pricelist-info {
-                flex-direction: column;
-            }
-            .welcome-section h2 {
-                font-size: 1.4rem;
-            }
-            .welcome-section .logo-store {
-                width: 60px;
-                height: 60px;
-            }
-            .quick-category {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            }
-            .quick-category .card img {
-                width: 55px;
-                height: 55px;
-            }
-            .quick-category .card {
-                min-height: 110px;
-                padding: 1rem 0.6rem;
-            }
-            .card-with-img img {
-                max-width: 140px;
-            }
-            .modal-box {
-                padding: 1.5rem;
-                margin: 0 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .pricelist-grid {
-                grid-template-columns: 1fr;
-            }
-            .quick-category {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            }
-            .quick-category .card img {
-                width: 45px;
-                height: 45px;
-            }
-            .quick-category .card i {
-                font-size: 2rem;
-            }
-            .quick-category .card h3 {
-                font-size: 0.7rem;
-            }
-            .card-with-img img {
-                max-width: 120px;
-            }
-            .welcome-section .logo-store {
-                width: 50px;
-                height: 50px;
-            }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 500px) {
+            .portal { padding: 2rem 1.5rem; }
+            .title { font-size: 1.5rem; }
+            .logo { width: 80px; height: 80px; }
+            .maintenance-icon { font-size: 4rem; }
+            .maintenance-title { font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="moving-dots"><canvas id="dotCanvas"></canvas></div>
+    <div class="bg-gradient"></div>
+    <canvas id="dotCanvas"></canvas>
     <div class="gradient-overlay"></div>
 
-    <div class="container">
-
-        <!-- HEADER -->
-        <div class="header">
-            <div class="logo">
-                <img src="https://files.catbox.moe/91ei5z.jpg" alt="ACR NEXUS Logo">
-                <div>
-                    <h1>⚡ ACR NEXUS</h1>
-                    <p>gamepass & digital currency • instant delivery</p>
-                </div>
+    <div class="portal">
+        <!-- ===== LOGO ===== -->
+        <img src="https://files.catbox.moe/91ei5z.jpg" alt="ACR NEXUS" class="logo" onerror="this.style.display='none'">
+        
+        <!-- ===== TITLE ===== -->
+        <div class="title" id="portalTitle">ACR NEXUS</div>
+        <div class="subtitle" id="portalSubtitle">Digital Store • Instant Delivery</div>
+        
+        <!-- ===== LOADING MODE ===== -->
+        <div class="loading-box" id="loadingBox">
+            <div class="spinner-wrapper">
+                <div class="spinner"></div>
+                <div class="spinner-inner"></div>
             </div>
-            <div class="nav-menu">
-                <button class="nav-btn active" data-page="home">
-                    🏠 <span class="nav-label">Home</span>
-                </button>
-                <button class="nav-btn" data-page="gamepass">
-                    <img src="https://files.catbox.moe/fbd323.jpg" alt="Gamepas DDS">
-                    <span class="nav-label">Gamepas DDS</span>
-                </button>
-                <button class="nav-btn" data-page="cash">
-                    <i class="fas fa-coins" style="color:#ffd700; font-size:1.1rem;"></i>
-                    <span class="nav-label">Cash</span>
-                </button>
-                <button class="nav-btn" data-page="freefire">
-                    <img src="https://files.catbox.moe/wnsru2.jpg" alt="FF">
-                    <span class="nav-label">FF</span>
-                </button>
-                <button class="nav-btn" data-page="ml">
-                    <img src="https://files.catbox.moe/attagc.jpg" alt="ML">
-                    <span class="nav-label">ML</span>
-                </button>
-                <button class="nav-btn" data-page="joki">
-                    <img src="https://files.catbox.moe/nklpcj.jpg" alt="Joki">
-                    <span class="nav-label">Joki</span>
-                </button>
-                <button class="nav-btn" data-page="logo">
-                    <i class="fas fa-paint-brush" style="color:#ff6b9d; font-size:1.1rem;"></i>
-                    <span class="nav-label">Logo</span>
-                </button>
-                <button class="nav-btn" data-page="pricelist">
-                    <img src="https://files.catbox.moe/o502l0.jpg" alt="Gamepas CDID">
-                    <span class="nav-label">Gamepas CDID</span>
-                </button>
+            <div class="loading-text" id="loadingText">Menyiapkan halaman</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
             </div>
+            <div class="progress-percent" id="progressPercent">0%</div>
         </div>
-
-        <!-- ===================== HOME ===================== -->
-        <div id="page-home" class="page active">
-            <div class="welcome-section">
-                <img src="https://files.catbox.moe/91ei5z.jpg" alt="ACR NEXUS Logo" class="logo-store">
-                <h2>Selamat Datang di ACR NEXUS</h2>
-                <p>
-                    Tempat terbaik untuk <span class="highlight">Gamepass</span>, 
-                    <span class="highlight">Top Up Cash</span>, 
-                    <span class="highlight">Diamond Free Fire &amp; Mobile Legends</span>, 
-                    <span class="highlight">Jasa Joki</span>, dan 
-                    <span class="highlight">Desain Logo</span> keren! 
-                    🚀 Nikmati harga terbaik, proses cepat, dan pelayanan ramah 24/7.
-                </p>
-                <p style="margin-top:6px; font-size:0.8rem; color:#7c8eff;">
-                    <i class="fas fa-bolt"></i> Klik produk favoritmu, langsung order via WhatsApp!
-                </p>
+        
+        <!-- ===== MAINTENANCE MODE ===== -->
+        <div class="maintenance-box" id="maintenanceBox">
+            <div class="maintenance-icon">🔧</div>
+            <div class="maintenance-title" id="maintenanceTitle">Sedang Maintenance</div>
+            <div class="maintenance-message" id="maintenanceMessage">
+                Kami sedang melakukan perbaikan sistem.<br>Silakan kembali lagi nanti ya! 🙏
             </div>
-
-            <div class="quick-category">
-                <div class="card" onclick="navigateTo('gamepass')">
-                    <img src="https://files.catbox.moe/fbd323.jpg" alt="Gamepas DDS">
-                    <h3>🎮 Gamepas DDS</h3>
-                </div>
-                <div class="card" onclick="navigateTo('cash')">
-                    <i class="fas fa-coins" style="color:#ffd700;"></i>
-                    <h3>💰 Cash</h3>
-                </div>
-                <div class="card" onclick="navigateTo('freefire')">
-                    <img src="https://files.catbox.moe/wnsru2.jpg" alt="Free Fire">
-                    <h3>🔥 Free Fire</h3>
-                </div>
-                <div class="card" onclick="navigateTo('ml')">
-                    <img src="https://files.catbox.moe/attagc.jpg" alt="Mobile Legends">
-                    <h3>💎 ML</h3>
-                </div>
-                <div class="card" onclick="navigateTo('joki')">
-                    <img src="https://files.catbox.moe/nklpcj.jpg" alt="Joki">
-                    <h3>🎯 Joki</h3>
-                </div>
-                <div class="card" onclick="navigateTo('logo')">
-                    <i class="fas fa-paint-brush" style="color:#ff6b9d;"></i>
-                    <h3>🎨 Logo</h3>
-                </div>
-                <div class="card" onclick="navigateTo('pricelist')">
-                    <img src="https://files.catbox.moe/o502l0.jpg" alt="Gamepas CDID">
-                    <h3>🏷️ Gamepas CDID</h3>
-                </div>
-            </div>
+            <div class="maintenance-eta" id="maintenanceEta">Estimasi selesai: 30 menit</div>
         </div>
-
-        <!-- ===================== GAMEPASS (GAMEPAS DDS) ===================== -->
-        <div id="page-gamepass" class="page">
-            <div class="section-title"><i class="fas fa-gamepad"></i> <span>🎮 GAMEPAS DDS</span></div>
-            <p style="margin-bottom:0.5rem; font-size:0.8rem; color:#99a4dd;">Pilih metode pembelian favoritmu</p>
-            <div class="grid" id="gamepassGrid"></div>
-            <div class="info-panel">
-                <div>
-                    <h4><i class="far fa-clock"></i> JAM OPERASIONAL</h4>
-                    <p><span class="badge-time">📅 Hari Biasa</span> <strong>02:30 WIB</strong></p>
-                    <p><span class="badge-time">🎉 Hari Libur</span> <strong>10:00 WIB</strong></p>
-                    <p><span class="badge-time">🔒 Tutup</span> <strong>21:00 WIB</strong></p>
-                </div>
-                <div>
-                    <h4><i class="fab fa-whatsapp"></i> KONTAK</h4>
-                    <p><i class="fab fa-whatsapp"></i> 085781209423</p>
-                    <p><i class="fab fa-tiktok"></i> @acrnexusstor.id</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===================== CASH ===================== -->
-        <div id="page-cash" class="page">
-            <div class="section-title"><i class="fas fa-coins"></i> <span>💰 UANG GAME (CASH)</span></div>
-            <p style="font-size:0.85rem; color:#99a4dd; margin-bottom:1rem;">Harga Normal / Store</p>
-            <div class="grid" id="cashGrid"></div>
-            <div class="info-panel">
-                <div>
-                    <h4><i class="far fa-clock"></i> JAM OPERASIONAL</h4>
-                    <p><span class="badge-time">📅 Hari Biasa</span> <strong>02:30 WIB</strong></p>
-                    <p><span class="badge-time">🎉 Hari Libur</span> <strong>10:00 WIB</strong></p>
-                    <p><span class="badge-time">🔒 Tutup</span> <strong>21:00 WIB</strong></p>
-                </div>
-                <div>
-                    <h4><i class="fab fa-whatsapp"></i> KONTAK</h4>
-                    <p><i class="fab fa-whatsapp"></i> 085781209423</p>
-                    <p><i class="fab fa-tiktok"></i> @acrnexusstor.id</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===================== FREEFIRE ===================== -->
-        <div id="page-freefire" class="page">
-            <div class="section-title"><i class="fas fa-fire"></i> <span>🔥 DIAMOND FREEFIRE</span></div>
-            <p style="font-size:0.85rem; color:#99a4dd; margin-bottom:1rem;">💎 DAFTAR HARGA DIAMONDS</p>
-            <div class="grid" id="ffGrid"></div>
-            <div class="info-panel">
-                <div>
-                    <h4><i class="far fa-clock"></i> JAM OPERASIONAL</h4>
-                    <p><span class="badge-time">📅 Hari Biasa</span> <strong>02:30 WIB</strong></p>
-                    <p><span class="badge-time">🎉 Hari Libur</span> <strong>10:00 WIB</strong></p>
-                    <p><span class="badge-time">🔒 Tutup</span> <strong>21:00 WIB</strong></p>
-                </div>
-                <div>
-                    <h4><i class="fab fa-whatsapp"></i> KONTAK</h4>
-                    <p><i class="fab fa-whatsapp"></i> 085781209423</p>
-                    <p><i class="fab fa-tiktok"></i> @acrnexusstor.id</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===================== MOBILE LEGENDS ===================== -->
-        <div id="page-ml" class="page">
-            <div class="section-title"><i class="fas fa-diamond"></i> <span>💎 DIAMOND MOBILE LEGENDS</span></div>
-            <p style="font-size:0.8rem; color:#99a4dd; margin-bottom:1rem;">Via ID & Server — harga terbaik!</p>
-            <div class="grid" id="mlGrid"></div>
-            <div class="info-panel">
-                <div>
-                    <h4><i class="far fa-clock"></i> JAM OPERASIONAL</h4>
-                    <p><span class="badge-time">📅 Hari Biasa</span> <strong>02:30 WIB</strong></p>
-                    <p><span class="badge-time">🎉 Hari Libur</span> <strong>10:00 WIB</strong></p>
-                    <p><span class="badge-time">🔒 Tutup</span> <strong>21:00 WIB</strong></p>
-                </div>
-                <div>
-                    <h4><i class="fab fa-whatsapp"></i> KONTAK</h4>
-                    <p><i class="fab fa-whatsapp"></i> 085781209423</p>
-                    <p><i class="fab fa-instagram"></i> @acrnexusstor.id</p>
-                    <p><i class="fab fa-tiktok"></i> @acrnexusstor.id</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===================== JOKI ===================== -->
-        <div id="page-joki" class="page">
-            <div class="section-title"><i class="fas fa-trophy"></i> <span>🎯 JASA JOKI FREE FIRE</span></div>
-            <p style="font-size:0.85rem; color:#ffd700; margin-bottom:0.5rem;">🔥 READY CSR &amp; BR RANKED | PROSES CEPAT &amp; AMAN</p>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-                <div>
-                    <h4 style="color:#b7c4ff; margin-bottom:8px;">🏆 BR RANKED (KE HEROIC)</h4>
-                    <div class="joki-list" id="brList"></div>
-                    <p style="font-size:0.7rem; color:#99a4dd; margin-top:6px;">Heroic ➔ Master: Rp 15K / Bintang</p>
-                </div>
-                <div>
-                    <h4 style="color:#b7c4ff; margin-bottom:8px;">🔫 CS RANKED (PER BINTANG)</h4>
-                    <div class="joki-list" id="csList"></div>
-                </div>
-            </div>
-            <div class="info-panel" style="margin-top:1rem;">
-                <div>
-                    <h4><i class="fas fa-credit-card"></i> METODE PEMBAYARAN</h4>
-                    <p>DANA / GOPAY / QRIS</p>
-                </div>
-                <div>
-                    <h4><i class="fas fa-phone"></i> HUBUNGI SEKARANG</h4>
-                    <p><i class="fab fa-tiktok"></i> @acrnexusstor.id</p>
-                    <p><i class="fab fa-whatsapp"></i> 085781209423</p>
-                    <button class="wa-btn" onclick="window.open('https://wa.me/6285781209423?text=Halo%20saya%20mau%20order%20joki%20FF','_blank')">
-                        <i class="fab fa-whatsapp"></i> Order Joki
-                    </button>
-                    <p style="font-size:0.7rem; color:#ff6b35; margin-top:4px;">Langsung gass, slot terbatas!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===================== LOGO ===================== -->
-        <div id="page-logo" class="page">
-            <div class="section-title"><i class="fas fa-paint-brush"></i> <span>🎨 JASA BIKIN LOGO — BY ACR NEXUS</span></div>
-            <div class="grid" id="logoGrid"></div>
-            <div class="info-panel" style="margin-top:1rem;">
-                <div>
-                    <h4><i class="fab fa-whatsapp"></i> KONTAK</h4>
-                    <p><i class="fab fa-whatsapp"></i> 085781209423</p>
-                    <p><i class="fab fa-tiktok"></i> @acrnexusstor.id</p>
-                    <button class="wa-btn" onclick="window.open('https://wa.me/6285781209423?text=Halo%20saya%20mau%20order%20jasa%20logo','_blank')">
-                        <i class="fab fa-whatsapp"></i> Order Logo
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===================== PRICELIST (GAMEPAS CDID) ===================== -->
-        <div id="page-pricelist" class="page">
-            <div class="pricelist-block">
-                <div class="main-title">🏎️ GAMEPAS CDID 🏎️</div>
-                <div class="sub-title">Upgrade mobilmu sekarang di Raken Store!</div>
-
-                <div class="list-header"><i class="fas fa-tools"></i> DAFTAR GAMEPASS</div>
-                <div class="pricelist-grid" id="pricelistGamepassList"></div>
-
-                <div class="pricelist-info">
-                    <div class="info-col">
-                        <h5><i class="far fa-clock"></i> JAM OPERASIONAL</h5>
-                        <p>📅 Hari Biasa: Buka jam <strong>02:30 WIB</strong></p>
-                        <p>🎉 Hari Libur: Buka jam <strong>10:00 WIB</strong></p>
-                        <p>🔒 Tutup: Setiap jam <strong>21:00 WIB</strong></p>
-                    </div>
-                    <div class="info-col">
-                        <h5><i class="fas fa-credit-card"></i> PEMBAYARAN &amp; KONTAK</h5>
-                        <p>Metode: <strong>GoPay (Scan QRIS)</strong></p>
-                        <p>TikTok: <strong>@acrnexusstor.id</strong></p>
-                        <p>WhatsApp: <strong>085781209423</strong></p>
-                    </div>
-                </div>
-
-                <div class="btn-order-center">
-                    <button class="wa-btn" onclick="window.open('https://wa.me/6285781209423?text=Halo%20ACR%20NEXUS%20saya%20mau%20order%20produk','_blank')">
-                        <i class="fab fa-whatsapp"></i> Order Sekarang
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===================== FOOTER ===================== -->
-        <footer>
+        
+        <!-- ===== INFO / FOOTER ===== -->
+        <div class="info">
             <p>© 2025 ACR NEXUS — Premium Digital Store</p>
             <div class="social-links">
-                <a href="https://www.tiktok.com/@acrnexusstor.id?_r=1&_t=ZS-97HjMCZIySw" target="_blank" aria-label="TikTok ACR NEXUS">
-                    <i class="fab fa-tiktok"></i>
-                </a>
-                <a href="https://www.instagram.com/acrnexusstor.id/" target="_blank" aria-label="Instagram ACR NEXUS">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://whatsapp.com/channel/0029Vb8C9co6BIEb5f7pm027" target="_blank" aria-label="WhatsApp Channel ACR NEXUS">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
+                <a href="#" id="linkTiktok" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="#" id="linkInstagram" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" id="linkWhatsapp" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
             </div>
-            <div style="font-size:0.65rem; color:#7c8eff;">
-                📱 @acrnexusstor.id | WA Channel: 085781209423
-            </div>
-        </footer>
-
-    </div>
-
-    <!-- ===================== MODAL POPUP ===================== -->
-    <div class="modal-overlay" id="priceModal">
-        <div class="modal-box">
-            <div class="modal-title">💎 Pilih Metode Pembelian</div>
-            <div class="modal-subtitle">Silakan pilih harga yang ingin digunakan</div>
-            <div class="modal-product" id="modalProductName">-</div>
-            <div class="modal-options">
-                <button class="opt-btn store-opt" onclick="confirmOrder('store')">
-                    🏬 Store Resmi
-                    <span class="price-tag" id="modalStorePrice">-</span>
-                </button>
-                <button class="opt-btn special-opt" onclick="confirmOrder('special')">
-                    ✨ Lewat Saya
-                    <span class="price-tag" id="modalSpecialPrice">-</span>
-                </button>
-            </div>
-            <button class="modal-close" onclick="closeModal()">❌ Batal</button>
         </div>
     </div>
 
+    <!-- ===== CONFIG ===== -->
+    <script src="config.js"></script>
+    
     <script>
-        // ===================== CANVAS DOTS =====================
+        // ============================================================
+        // BACKGROUND ANIMASI DOTS
+        // ============================================================
         const canvas = document.getElementById('dotCanvas');
-        let ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d');
         let dots = [];
-        const dotCount = 180;
-
+        const dotCount = 100;
+        
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
-
+        
         class MovingDot {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.radius = Math.random() * 2.2 + 1.0;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
                 this.opacity = Math.random() * 0.5 + 0.2;
-                this.color = `rgba(170, 200, 255, ${this.opacity})`;
             }
             update() {
                 this.x += this.speedX;
@@ -1307,416 +427,100 @@
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-                ctx.shadowBlur = 3;
-                ctx.shadowColor = "rgba(100, 150, 255, 0.3)";
+                ctx.fillStyle = `rgba(170, 200, 255, ${this.opacity})`;
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = 'rgba(140, 80, 255, 0.5)';
                 ctx.fill();
                 ctx.shadowBlur = 0;
             }
         }
-
+        
         function initDots() {
             dots = [];
             for (let i = 0; i < dotCount; i++) dots.push(new MovingDot());
         }
-
+        
         function animateDots() {
-            if (!ctx) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "rgba(10, 12, 26, 0.08)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            for (let dot of dots) { dot.update();
-                dot.draw(); }
+            dots.forEach(d => { d.update(); d.draw(); });
             requestAnimationFrame(animateDots);
         }
-
+        
         resizeCanvas();
         initDots();
         animateDots();
-        window.addEventListener('resize', () => { resizeCanvas();
-            initDots(); });
-
-        // ===================== NAVIGASI =====================
-        function navigateTo(page) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-' + page).classList.add('active');
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector(`.nav-btn[data-page="${page}"]`).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.addEventListener('resize', () => { resizeCanvas(); initDots(); });
+        
+        // ============================================================
+        // APPLY CONFIG
+        // ============================================================
+        document.getElementById('portalTitle').textContent = CONFIG.loadingTitle;
+        document.getElementById('portalSubtitle').textContent = CONFIG.loadingSubtitle;
+        document.getElementById('loadingText').textContent = CONFIG.loadingText;
+        document.getElementById('maintenanceTitle').textContent = CONFIG.maintenanceTitle;
+        document.getElementById('maintenanceMessage').innerHTML = CONFIG.maintenanceMessage;
+        document.getElementById('maintenanceEta').textContent = CONFIG.maintenanceEta;
+        
+        // Link sosial media
+        document.getElementById('linkTiktok').href = CONFIG.tiktok;
+        document.getElementById('linkInstagram').href = CONFIG.instagram;
+        document.getElementById('linkWhatsapp').href = 'https://wa.me/' + CONFIG.whatsapp;
+        
+        // ============================================================
+        // CEK MAINTENANCE MODE
+        // ============================================================
+        if (CONFIG.maintenanceMode === true) {
+            // Tampilkan mode maintenance
+            document.getElementById('loadingBox').classList.add('hidden');
+            document.getElementById('maintenanceBox').classList.add('active');
+            document.title = '🔧 Maintenance - ACR NEXUS';
+        } else {
+            // Mulai loading & redirect
+            startLoading();
         }
-
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                navigateTo(btn.dataset.page);
-            });
-        });
-
-        // ===================== MODAL =====================
-        let modalData = {};
-
-        function openModal(productName, storePrice, specialPrice, waMessageStore, waMessageSpecial) {
-            modalData = {
-                productName: productName,
-                storePrice: storePrice,
-                specialPrice: specialPrice,
-                waMessageStore: waMessageStore,
-                waMessageSpecial: waMessageSpecial
-            };
-
-            document.getElementById('modalProductName').textContent = productName;
-            document.getElementById('modalStorePrice').textContent = storePrice;
-            document.getElementById('modalSpecialPrice').textContent = specialPrice;
-            document.getElementById('priceModal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('priceModal').classList.remove('active');
-        }
-
-        function confirmOrder(type) {
-            const waMsg = type === 'store' ? modalData.waMessageStore : modalData.waMessageSpecial;
-            window.open('https://wa.me/6285781209423?text=' + encodeURIComponent(waMsg), '_blank');
-            closeModal();
-        }
-
-        // Tutup modal klik di luar
-        document.getElementById('priceModal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-
-        // ===================== DATA & FORMAT =====================
-        function formatRp(n) { return new Intl.NumberFormat('id-ID').format(n); }
-
-        // ===== DATA PRICELIST =====
-        const pricelistGamepassData = [
-            { name: 'OWNABLE CAR', price: 15000 },
-            { name: 'LUXURY HOUSE', price: 13000 },
-            { name: 'EMERGENCY VEHICLES', price: 17000 },
-            { name: 'RETRO PASS', price: 19000 },
-            { name: 'ADVANCE MODIFICATION', price: 26000 },
-            { name: 'RARE IMPORTS', price: 21000 },
-            { name: 'LUXURY CAR', price: 27900 },
-            { name: '2X OWN CAR', price: 29900 },
-            { name: '2X PAYCHECK', price: 38900 },
-            { name: '+50% EARNING', price: 40000 }
-        ];
-
-        // ===== DATA GAMEPASS PAGE (HARGA SUDAH DIPERBARUI) =====
-        const gamepassData = [
-            { name: 'Radio', storePrice: 4000, specialPrice: 5000 },
-            { name: 'Suspension', storePrice: 4000, specialPrice: 7000 },
-            { name: 'Premium Accessories', storePrice: 7000, specialPrice: 11000 },
-            { name: 'Paint Pass', storePrice: 8000, specialPrice: 12000 },
-            { name: 'Exclusive Rims', storePrice: 9000, specialPrice: 13000 },
-            { name: 'Custom Plate', storePrice: 9000, specialPrice: 13000 },
-            { name: 'Slot Expansion', storePrice: 11000, specialPrice: 14000 },
-            { name: 'Dragspec', storePrice: 12000, specialPrice: 14000 },
-            { name: 'Luxury Pass', storePrice: 13000, specialPrice: 16000 },
-            { name: 'Police Pass', storePrice: 16000, specialPrice: 20000 },
-            { name: '2x Paycheck', storePrice: 55000, specialPrice: 58000 }
-        ];
-
-        // ===== DATA CASH DENGAN GAMBAR =====
-        const cashData = [
-            { nominal: '5.000.000', store: 3000, special: 5000, img: 'https://files.catbox.moe/pycgnv.jpg' },
-            { nominal: '10.000.000', store: 5000, special: 10000, img: 'https://files.catbox.moe/fb33o4.jpg' },
-            { nominal: '50.000.000', store: 8000, special: 13000, img: 'https://files.catbox.moe/ob074q.jpg' },
-            { nominal: '100.000.000', store: 11000, special: 16000, img: 'https://files.catbox.moe/2jwe14.jpg' },
-            { nominal: '500.000.000', store: 42000, special: 47000, img: 'https://files.catbox.moe/kwhio1.jpg' }
-        ];
-
-        // ===== DATA FF DENGAN GAMBAR =====
-        const ffData = [
-            { qty: '30', price: 6000, img: 'https://files.catbox.moe/8ku4bh.jpg' },
-            { qty: '40', price: 8000, img: 'https://files.catbox.moe/m8dh7t.jpg' },
-            { qty: '60', price: 10000, img: 'https://files.catbox.moe/wzy1y9.jpg' },
-            { qty: '75', price: 11000, img: 'https://files.catbox.moe/if30vw.jpg' },
-            { qty: '100', price: 15000, img: 'https://files.catbox.moe/lr1nkw.jpg' },
-            { qty: '120', price: 17000, img: 'https://files.catbox.moe/n8st9p.jpg' },
-            { qty: '150', price: 21000, img: 'https://files.catbox.moe/3424oz.jpg' },
-            { qty: '190', price: 25000, img: 'https://files.catbox.moe/jpyvld.jpg' },
-            { qty: '200', price: 26000, img: 'https://files.catbox.moe/7mmq1n.jpg' },
-            { qty: '250', price: 33000, img: 'https://files.catbox.moe/q19bdj.jpg' },
-            { qty: '280', price: 36000, img: 'https://files.catbox.moe/u3rj6d.jpg' },
-            { qty: '300', price: 40000, img: 'https://files.catbox.moe/7z1htv.jpg' },
-            { qty: '350', price: 45000, img: 'https://files.catbox.moe/fyisyu.jpg' },
-            { qty: '360', price: 46000, img: 'https://files.catbox.moe/4n8pby.jpg' },
-            { qty: '1000', price: 125000, img: 'https://files.catbox.moe/hm10p9.jpg' },
-            { qty: '1510', price: 187000, img: 'https://files.catbox.moe/vhrmzo.jpg' },
-            { qty: '1800', price: 224000, img: 'https://files.catbox.moe/ghiujc.jpg' },
-            { qty: '1875', price: 233000, img: 'https://files.catbox.moe/f41rf9.jpg' },
-            { qty: '1975', price: 246000, img: 'https://files.catbox.moe/njhw3z.jpg' },
-            { qty: '2000', price: 250000, img: 'https://files.catbox.moe/1bf6mo.jpg' },
-            { qty: '2140', price: 268000, img: 'https://files.catbox.moe/yt4c8e.jpg' }
-        ];
-
-        // ===== DATA ML DENGAN GAMBAR =====
-        const mlData = [
-            { qty: '86', price: 25500, img: 'https://files.catbox.moe/4cmwdc.jpg' },
-            { qty: '172', price: 48000, img: 'https://files.catbox.moe/qdgnr6.jpg' },
-            { qty: '257', price: 70000, img: 'https://files.catbox.moe/uqd8o1.jpg' },
-            { qty: '344', price: 91000, img: 'https://files.catbox.moe/gyxvxt.jpg' },
-            { qty: '429', price: 112000, img: 'https://files.catbox.moe/y45y5x.jpg' },
-            { qty: '514', price: 135000, img: 'https://files.catbox.moe/491rwn.jpg' },
-            { qty: '600', price: 154000, img: 'https://files.catbox.moe/osfmxi.jpg' },
-            { qty: '706', price: 179000, img: 'https://files.catbox.moe/arhci1.jpg' },
-            { qty: '876', price: 223000, img: 'https://files.catbox.moe/l8ln8s.jpg' },
-            { qty: '1146', price: 363000, img: 'https://files.catbox.moe/bwh1t9.jpg' },
-            { qty: '2159', price: 513500, img: 'https://files.catbox.moe/yj0jnr.jpg' },
-            { qty: '3073', price: 733000, img: 'https://files.catbox.moe/g2s1tm.jpg' },
-            { qty: 'Paket Spesial', price: 28000, img: 'https://files.catbox.moe/z7fsyj.jpg' }
-        ];
-
-        const brData = [
-            { from: 'Gold 1', price: 90000 },
-            { from: 'Gold 2', price: 80000 },
-            { from: 'Gold 3', price: 70000 },
-            { from: 'Gold 4', price: 60000 },
-            { from: 'Plat 1', price: 50000 },
-            { from: 'Plat 2', price: 45000 },
-            { from: 'Plat 3', price: 40000 },
-            { from: 'Plat 4', price: 35000 },
-            { from: 'DM 1', price: 25000 },
-            { from: 'DM 2', price: 20000 },
-            { from: 'DM 3', price: 15000 },
-            { from: 'DM 4', price: 10000 }
-        ];
-
-        const csData = [
-            { tier: 'Gold', price: 1000 },
-            { tier: 'Platinum', price: 1000 },
-            { tier: 'Diamond', price: 'PERBINTANG' },
-            { tier: 'Heroic', price: 1500 },
-            { tier: 'Master', price: 1500 }
-        ];
-
-        const logoData = [
-            { name: 'LOGO', tanpa: 7000, ubah: 12000 },
-            { name: 'LOGO FT', tanpa: 9000, ubah: 13000 },
-            { name: 'DESAIN QRIS', tanpa: 6000, ubah: 11000 },
-            { name: 'BANNER WELCOME', tanpa: 5000, ubah: 8000 },
-            { name: 'DESAIN ROASTER TEAM', tanpa: 4000, ubah: '-' }
-        ];
-
-        // ===================== RENDER FUNCTIONS =====================
-        function renderPricelistGamepass() {
-            const g = document.getElementById('pricelistGamepassList');
-            if (g) {
-                g.innerHTML = '';
-                pricelistGamepassData.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'item';
-                    div.innerHTML = `<span class="name">${item.name}</span> <span class="price">Rp ${formatRp(item.price)}</span>`;
-                    div.onclick = () => {
-                        const msg = `Halo ACR NEXUS! Saya mau order GAMEPASS: ${item.name} (Rp ${formatRp(item.price)})`;
-                        window.open('https://wa.me/6285781209423?text=' + encodeURIComponent(msg), '_blank');
-                    };
-                    g.appendChild(div);
-                });
-            }
-        }
-
-        function renderGamepass() {
-            const g = document.getElementById('gamepassGrid');
-            g.innerHTML = '';
-            gamepassData.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.onclick = () => {
-                    const productName = item.name;
-                    const storePrice = `Rp ${formatRp(item.storePrice)}`;
-                    const specialPrice = `Rp ${formatRp(item.specialPrice)}`;
-                    const waStore = `Halo ACR NEXUS! Saya mau order GAMEPASS STORE: ${item.name} (${storePrice})`;
-                    const waSpecial = `Halo ACR NEXUS! Saya mau order GAMEPASS LEWAT SAYA: ${item.name} (${specialPrice})`;
-                    openModal(productName, storePrice, specialPrice, waStore, waSpecial);
-                };
-                card.innerHTML = `
-                    <div class="card-header">
-                        <span class="product-name">${item.name}</span>
-                        <span class="badge-type">Gamepass</span>
-                    </div>
-                    <div class="price-block">
-                        <div class="price-store"><i class="fas fa-store"></i> STORE: <span>Rp ${formatRp(item.storePrice)}</span></div>
-                        <div class="price-special"><i class="fas fa-user-check"></i> LEWAT SAYA: <strong>Rp ${formatRp(item.specialPrice)}</strong></div>
-                    </div>
-                    <div class="divider-light"></div>
-                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → pilih harga</div>
-                `;
-                g.appendChild(card);
-            });
-        }
-
-        function renderCash() {
-            const g = document.getElementById('cashGrid');
-            g.innerHTML = '';
-            cashData.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'card-with-img';
-                card.onclick = () => {
-                    const productName = `Cash ${item.nominal}`;
-                    const storePrice = `Rp ${formatRp(item.store)}`;
-                    const specialPrice = `Rp ${formatRp(item.special)}`;
-                    const waStore = `Halo ACR NEXUS! Saya mau order CASH STORE: ${item.nominal} (${storePrice})`;
-                    const waSpecial = `Halo ACR NEXUS! Saya mau order CASH LEWAT SAYA: ${item.nominal} (${specialPrice})`;
-                    openModal(productName, storePrice, specialPrice, waStore, waSpecial);
-                };
-                card.innerHTML = `
-                    <img src="${item.img}" alt="${item.nominal} Cash">
-                    <div style="width:100%;">
-                        <div class="card-header" style="justify-content:center;">
-                            <span class="product-name">💰 ${item.nominal}</span>
-                            <span class="badge-type">Cash</span>
-                        </div>
-                        <div class="price-block">
-                            <div class="price-store"><i class="fas fa-store"></i> STORE: <span>Rp ${formatRp(item.store)}</span></div>
-                            <div class="price-special"><i class="fas fa-user-check"></i> LEWAT SAYA: <strong>Rp ${formatRp(item.special)}</strong></div>
-                        </div>
-                        <div class="divider-light"></div>
-                        <div class="note-item wa-hint" style="justify-content:center;"><i class="fab fa-whatsapp"></i> Klik → pilih harga</div>
-                    </div>
-                `;
-                g.appendChild(card);
-            });
-        }
-
-        function renderFF() {
-            const g = document.getElementById('ffGrid');
-            g.innerHTML = '';
-            ffData.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'card-with-img';
-                card.onclick = () => {
-                    const productName = `FF ${item.qty} Diamond`;
-                    const storePrice = `Rp ${formatRp(item.price)}`;
-                    const specialPrice = `Rp ${formatRp(item.price + 5000)}`;
-                    const waStore = `Halo ACR NEXUS! Saya mau order DIAMOND FF STORE: ${item.qty} Diamond (${storePrice})`;
-                    const waSpecial = `Halo ACR NEXUS! Saya mau order DIAMOND FF LEWAT SAYA: ${item.qty} Diamond (${specialPrice})`;
-                    openModal(productName, storePrice, specialPrice, waStore, waSpecial);
-                };
-                card.innerHTML = `
-                    <img src="${item.img}" alt="${item.qty} Diamonds">
-                    <div style="width:100%;">
-                        <div class="card-header" style="justify-content:center;">
-                            <span class="product-name">🔥 ${item.qty} 💎</span>
-                        </div>
-                        <div class="price-block">
-                            <div class="price-special"><i class="fas fa-tag"></i> Rp <strong>${formatRp(item.price)}</strong></div>
-                        </div>
-                        <div class="divider-light"></div>
-                        <div class="note-item wa-hint" style="justify-content:center;"><i class="fab fa-whatsapp"></i> Klik → pilih harga</div>
-                    </div>
-                `;
-                g.appendChild(card);
-            });
-        }
-
-        function renderML() {
-            const g = document.getElementById('mlGrid');
-            g.innerHTML = '';
-            mlData.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'card-with-img';
-                card.onclick = () => {
-                    const productName = `ML ${item.qty} Diamond`;
-                    const storePrice = `Rp ${formatRp(item.price)}`;
-                    const specialPrice = `Rp ${formatRp(item.price + 5000)}`;
-                    const waStore = `Halo ACR NEXUS! Saya mau order DIAMOND ML STORE: ${item.qty} Diamond (${storePrice})`;
-                    const waSpecial = `Halo ACR NEXUS! Saya mau order DIAMOND ML LEWAT SAYA: ${item.qty} Diamond (${specialPrice})`;
-                    openModal(productName, storePrice, specialPrice, waStore, waSpecial);
-                };
-                card.innerHTML = `
-                    <img src="${item.img}" alt="${item.qty} ML Diamonds">
-                    <div style="width:100%;">
-                        <div class="card-header" style="justify-content:center;">
-                            <span class="product-name">💎 ${item.qty}</span>
-                            <span class="badge-type">ML</span>
-                        </div>
-                        <div class="price-block">
-                            <div class="price-special"><i class="fas fa-tag"></i> Rp <strong>${formatRp(item.price)}</strong></div>
-                        </div>
-                        <div class="divider-light"></div>
-                        <div class="note-item wa-hint" style="justify-content:center;"><i class="fab fa-whatsapp"></i> Klik → pilih harga</div>
-                    </div>
-                `;
-                g.appendChild(card);
-            });
-        }
-
-        function renderBR() {
-            const g = document.getElementById('brList');
-            g.innerHTML = '';
-            brData.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'item';
-                div.innerHTML =
-                    `<span>${item.from}</span> <span>Rp ${formatRp(item.price)}</span>`;
-                div.onclick = () => {
-                    const msg = `Halo ACR NEXUS! Saya mau order JOKI BR: ${item.from} ➔ Heroic (Rp ${formatRp(item.price)})`;
-                    window.open('https://wa.me/6285781209423?text=' + encodeURIComponent(msg), '_blank');
-                };
-                g.appendChild(div);
-            });
-        }
-
-        function renderCS() {
-            const g = document.getElementById('csList');
-            g.innerHTML = '';
-            csData.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'item';
-                const priceText = typeof item.price === 'string' ? item.price : `Rp ${formatRp(item.price)}`;
-                div.innerHTML = `<span>${item.tier}</span> <span>${priceText}</span>`;
-                if (typeof item.price === 'number') {
-                    div.onclick = () => {
-                        const msg = `Halo ACR NEXUS! Saya mau order JOKI CS: ${item.tier} (Rp ${formatRp(item.price)}/bintang)`;
-                        window.open('https://wa.me/6285781209423?text=' + encodeURIComponent(msg), '_blank');
-                    };
+        
+        // ============================================================
+        // LOADING PROGRESS + AUTO REDIRECT
+        // ============================================================
+        function startLoading() {
+            const duration = CONFIG.loadingDuration;
+            const startTime = Date.now();
+            const progressFill = document.getElementById('progressFill');
+            const progressPercent = document.getElementById('progressPercent');
+            
+            const interval = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                let percent = Math.min(100, (elapsed / duration) * 100);
+                
+                // Update progress bar
+                progressFill.style.width = percent + '%';
+                progressPercent.textContent = Math.floor(percent) + '%';
+                
+                // Update text based on progress
+                const loadingText = document.getElementById('loadingText');
+                if (percent < 30) {
+                    loadingText.textContent = 'Memuat aset';
+                } else if (percent < 60) {
+                    loadingText.textContent = 'Menyiapkan halaman';
+                } else if (percent < 90) {
+                    loadingText.textContent = 'Hampir selesai';
+                } else {
+                    loadingText.textContent = 'Mengalihkan';
                 }
-                g.appendChild(div);
-            });
+                
+                // Kalau sudah 100% → redirect
+                if (percent >= 100) {
+                    clearInterval(interval);
+                    progressFill.style.width = '100%';
+                    progressPercent.textContent = '100%';
+                    
+                    // Redirect setelah 500ms biar user lihat 100%
+                    setTimeout(() => {
+                        window.location.href = CONFIG.redirectUrl;
+                    }, 500);
+                }
+            }, 50);
         }
-
-        function renderLogo() {
-            const g = document.getElementById('logoGrid');
-            g.innerHTML = '';
-            logoData.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                const ubahText = item.ubah === '-' ? '-' : `Rp ${formatRp(item.ubah)}`;
-                card.onclick = () => {
-                    const productName = `Jasa Logo: ${item.name}`;
-                    const storePrice = `Rp ${formatRp(item.tanpa)}`;
-                    const specialPrice = item.ubah === '-' ? '-' : `Rp ${formatRp(item.ubah)}`;
-                    const waStore = `Halo ACR NEXUS! Saya mau order JASA LOGO: ${item.name}\nTanpa ubah karakter: Rp ${formatRp(item.tanpa)}`;
-                    const waSpecial = `Halo ACR NEXUS! Saya mau order JASA LOGO: ${item.name}\nUbah karakter: ${ubahText}`;
-                    openModal(productName, storePrice, specialPrice, waStore, waSpecial);
-                };
-                card.innerHTML = `
-                    <div class="card-header">
-                        <span class="product-name">🎨 ${item.name}</span>
-                        <span class="badge-type">Logo</span>
-                    </div>
-                    <div class="price-block">
-                        <div class="price-store"><i class="fas fa-check"></i> Tanpa ubah: <span>Rp ${formatRp(item.tanpa)}</span></div>
-                        <div class="price-special"><i class="fas fa-pen"></i> Ubah karakter: <strong>${ubahText}</strong></div>
-                    </div>
-                    <div class="divider-light"></div>
-                    <div class="note-item wa-hint"><i class="fab fa-whatsapp"></i> Klik → pilih harga</div>
-                `;
-                g.appendChild(card);
-            });
-        }
-
-        // ===================== JALANKAN SEMUA RENDER =====================
-        renderPricelistGamepass();
-        renderGamepass();
-        renderCash();
-        renderFF();
-        renderML();
-        renderBR();
-        renderCS();
-        renderLogo();
     </script>
 </body>
 </html>
