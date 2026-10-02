@@ -20,14 +20,14 @@ const CONFIG = {
     // true  = Portal menampilkan halaman maintenance
     // false = Portal loading normal lalu redirect
     // ============================================
-    maintenanceMode: false,
+    maintenanceMode: true,
     
     // ============================================
     // TEKS MAINTENANCE (muncul saat mode maintenance ON)
     // ============================================
     maintenanceTitle: "🔧 Sedang Maintenance",
     maintenanceMessage: "Kami sedang melakukan perbaikan sistem.<br>Silakan kembali lagi nanti ya! 🙏",
-    maintenanceEta: "Estimasi selesai: 30 menit",
+    maintenanceEta: "Estimasi selesai: 60 menit",
     
     // ============================================
     // TEKS LOADING
