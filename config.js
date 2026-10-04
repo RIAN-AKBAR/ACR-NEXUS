@@ -7,7 +7,7 @@ const CONFIG = {
     // ============================================
     // LINK CLOUDFLARE TUNNEL (tujuan redirect)
     // ============================================
-    redirectUrl: "https://biography-shelf-canberra-ethics.trycloudflare.com/acr-nexus",
+    redirectUrl: "https://useful-nights-sensitivity-email.trycloudflare.com/acr-nexus",
     
     // ============================================
     // DURASI LOADING (dalam milidetik)
@@ -20,7 +20,7 @@ const CONFIG = {
     // true  = Portal menampilkan halaman maintenance
     // false = Portal loading normal lalu redirect
     // ============================================
-    maintenanceMode: true,
+    maintenanceMode: false,
     
     // ============================================
     // TEKS MAINTENANCE (muncul saat mode maintenance ON)
