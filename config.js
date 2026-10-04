@@ -20,7 +20,7 @@ const CONFIG = {
     // true  = Portal menampilkan halaman maintenance
     // false = Portal loading normal lalu redirect
     // ============================================
-    maintenanceMode: false,
+    maintenanceMode: true,
     
     // ============================================
     // TEKS MAINTENANCE (muncul saat mode maintenance ON)
