@@ -7,7 +7,7 @@ const CONFIG = {
     // ============================================
     // LINK CLOUDFLARE TUNNEL (tujuan redirect)
     // ============================================
-    redirectUrl: "https://string-reveal-iso-bits.trycloudflare.com/acr-nexus",
+    redirectUrl: "https://maps-aids-attend-stranger.trycloudflare.com/acr-nexus",
     
     // ============================================
     // DURASI LOADING (dalam milidetik)
@@ -20,7 +20,7 @@ const CONFIG = {
     // true  = Portal menampilkan halaman maintenance
     // false = Portal loading normal lalu redirect
     // ============================================
-    maintenanceMode: true,
+    maintenanceMode: false,
     
     // ============================================
     // TEKS MAINTENANCE (muncul saat mode maintenance ON)
