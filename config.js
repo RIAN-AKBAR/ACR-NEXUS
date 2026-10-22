@@ -7,7 +7,7 @@ const CONFIG = {
     // ============================================
     // LINK CLOUDFLARE TUNNEL (tujuan redirect)
     // ============================================
-    redirectUrl: "https://maps-aids-attend-stranger.trycloudflare.com/acr-nexus",
+    redirectUrl: "https://centered-blocked-neural-taken.trycloudflare.com/acr-nexus",
     
     // ============================================
     // DURASI LOADING (dalam milidetik)
