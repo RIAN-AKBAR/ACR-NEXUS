@@ -7,7 +7,7 @@ const CONFIG = {
     // ============================================
     // LINK CLOUDFLARE TUNNEL (tujuan redirect)
     // ============================================
-    redirectUrl: "https://acids-evans-champion-tulsa.trycloudflare.com/acr-nexus",
+    redirectUrl: "silverhold-hosting.web.id/acr-nexus",
     
     // ============================================
     // DURASI LOADING (dalam milidetik)
