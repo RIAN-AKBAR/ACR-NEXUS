@@ -7,7 +7,7 @@ const CONFIG = {
     // ============================================
     // LINK CLOUDFLARE TUNNEL (tujuan redirect)
     // ============================================
-    redirectUrl: "silverhold-hosting.web.id/acr-nexus",
+    redirectUrl: "https://silverhold-hosting.web.id/acr-nexus",
     
     // ============================================
     // DURASI LOADING (dalam milidetik)
